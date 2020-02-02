@@ -18,5 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Route::group(['middleware' => ['cors']], function () {
-    Route::post('v1/queue', 'QueueController@add');
+    Route::post('v1/queue', 'Api\QueueController@add');
 // });
