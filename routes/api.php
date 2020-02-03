@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'], function () {
     Route::post('queue', 'Api\QueueController@addQueue');
     Route::post('employee', 'Api\EmployeeController@addEmployee');
+    Route::put('employee', 'Api\EmployeeController@editEmployee');
 });

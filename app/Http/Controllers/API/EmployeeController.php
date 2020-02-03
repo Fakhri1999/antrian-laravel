@@ -21,7 +21,7 @@ class EmployeeController extends Controller
       return response()->json(['status' => 'error', 'message' => 'Username already in use'], 400);
     }
     DB::table('petugas')->insert($insert);
-    return response()->json(['status' => 'success', 'message' => 'Officer succesfully added'], 201);
+    return response()->json(['status' => 'success', 'message' => 'Officer succesfully added'], 201);    
   }
 
   public function editEmployee(Request $request)
@@ -37,5 +37,7 @@ class EmployeeController extends Controller
     if (!$isUsernameUnique) {
       return response()->json(['status' => 'error', 'message' => 'Username already in use'], 400);
     }
+    DB::table('petugas')->where('id', $id)->update($update);
+    return response()->json(['status' => 'success', 'message' => 'Officer succesfully edited'], 200);
   }
 }
