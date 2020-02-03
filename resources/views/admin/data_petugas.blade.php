@@ -1,4 +1,4 @@
-@extends('template.master_layout')
+@extends('template.master_layout_admin')
 @section('title', 'Petugas')
 @section('content')
 <!-- Begin Page Content -->
