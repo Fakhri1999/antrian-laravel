@@ -14,7 +14,7 @@ class EmployeeController extends Controller
       'username' => $request->username,
       'nama' => $request->name,
       'pin' => $request->pin,
-      'status' => $request->status
+      'status' => "0"
     ];
     $isUsernameUnique = DB::table('petugas')->where('username', $insert['username'])->first() == null;
     if (!$isUsernameUnique) {
@@ -30,8 +30,7 @@ class EmployeeController extends Controller
     $update = [
       'username' => $request->username,
       'nama' => $request->name,
-      'pin' => $request->pin,
-      'status' => $request->status
+      'pin' => $request->pin
     ];
     $isUsernameUnique = DB::table('petugas')->where('id', '!=', $id)->where('username', $update['username'])->first() == null;
     if (!$isUsernameUnique) {
@@ -39,5 +38,10 @@ class EmployeeController extends Controller
     }
     DB::table('petugas')->where('id', $id)->update($update);
     return response()->json(['status' => 'success', 'message' => 'Officer succesfully edited'], 200);
+  }
+
+  public function getEmployee(){
+    $result = DB::table('petugas')->get();
+    return response()->json(['status' => 'success', 'message' => $result], 200);
   }
 }

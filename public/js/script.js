@@ -1,11 +1,10 @@
 let url = window.location;
 let protocol = url.protocol;
 let hostname = url.hostname;
-let pathname = url.pathname;
 let port = url.port;
 const baseUrl =
   hostname == "localhost"
-    ? `${protocol}//${hostname}:${port}${pathname}`
+    ? `${protocol}//${hostname}:${port}/`
     : `${protocol}//${hostname}/`;
 $(document).ready(function() {
   $(".add-queue").on("click", function() {

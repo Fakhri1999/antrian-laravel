@@ -26,7 +26,7 @@
               <th style="width: 10%">Aksi</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="isiTablePetugas">
             <tr>
               <td>1</td>
               <td>hannyen</td>
@@ -57,27 +57,73 @@
 </div>
 <!-- /.container-fluid -->
 </div>
-<!-- Modal -->
+<!-- Add Petugas Modal -->
 <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Petugas</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div class="form-group">
+          <label for="exampleInputEmail1">Username</label>
+          <input type="text" class="form-control" id="petugasUseranameAdd" placeholder="Masukkan username">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nama</label>
+          <input type="text" class="form-control" id="petugasNamaAdd" placeholder="Masukkan nama">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Pin</label>
+          <input type="text" class="form-control" id="petugasPinAdd" placeholder="Masukkan pin">
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-primary" id="submitTambahPetugas">Tambah</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Petugas Modal -->
+<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Petugas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Username</label>
+          <input type="text" class="form-control" id="petugasUseranameEdit" placeholder="Masukkan username">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nama</label>
+          <input type="text" class="form-control" id="petugasNamaEdit" placeholder="Masukkan nama">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Pin</label>
+          <input type="text" class="form-control" id="petugasPinEdit" placeholder="Masukkan pin">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-primary">Tambah</button>
       </div>
     </div>
   </div>
 </div>
 <!-- End of Main Content -->
 
+@endsection
+@section('js')
+<script src="{{asset('js/petugas.js')}}"></script>
 @endsection

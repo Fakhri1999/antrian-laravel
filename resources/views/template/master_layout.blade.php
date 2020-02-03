@@ -77,8 +77,6 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-
-
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -208,8 +206,12 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('admin-template/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('admin-template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    {{-- <script src="{{asset('admin-template/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('admin-template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('js/popper.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/sweetalert2@9.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('admin-template/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -219,6 +221,7 @@
 
     <!-- Page level plugins -->
     <script src="{{asset('admin-template/vendor/chart.js/Chart.min.js')}}"></script>
+    @yield('js')
 </body>
 
 </html>
