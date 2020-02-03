@@ -20,7 +20,5 @@ Route::post('admin/login', 'AdminController@login');
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdminLoggedIn']], function () {
   Route::get('/', 'AdminController@index');
   Route::get('/logout', 'AdminController@logout');
-  Route::get('/pegawai', function () {
-  	return view('admin/data_petugas');
-  });
+  Route::get('/petugas', 'AdminController@showPetugas');
 });

@@ -40,4 +40,8 @@ class AdminController extends Controller
     session()->flush();
     return redirect('admin/login');
   }
+
+  public function showPetugas(){
+    return view('admin/data_petugas');
+  }
 }
