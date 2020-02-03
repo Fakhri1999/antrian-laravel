@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class QueueController extends Controller
 {
-  public function add(Request $request)
+  public function addQueue(Request $request)
   {
     date_default_timezone_set('Asia/Jakarta');
     $timeNow = date("d-m-Y H:i:s");
@@ -24,7 +24,7 @@ class QueueController extends Controller
         $latestDate = explode(" ", $dbData[$i]->waktu_pembuatan)[0];
         if ($latestDate != $dateNow) {
           DB::table('antrian')->insert([
-            'nomor_antrian' => $queueType . '000',
+            'nomor_antrian' => $queueType . '001',
             'waktu_pembuatan' => $timeNow,
             'status' => '1'
           ]);
@@ -41,7 +41,7 @@ class QueueController extends Controller
     }
     if (!$ada) {
       DB::table('antrian')->insert([
-        'nomor_antrian' => $queueType . '000',
+        'nomor_antrian' => $queueType . '001',
         'waktu_pembuatan' => $timeNow,
         'status' => '1'
       ]);
