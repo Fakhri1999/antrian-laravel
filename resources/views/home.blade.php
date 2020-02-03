@@ -10,12 +10,13 @@
 </head>
 
 <body>
+  <input type="hidden" id="API_KEY" value="{{$API_KEY}}">
+
   <div class="container">
     <div class="row justify-content-center">
-      @for ($i = 1; $i <= 6; $i++) 
-      <div class="col-lg-2">
+      @for ($i = 1; $i <= 6; $i++) <div class="col-lg-2">
         <a href="javascrip:void" class="btn btn-primary add-queue" data-type="{{$type[$i - 1]}}">Antrian {{$i}}</a>
-      </div>
+    </div>
     @endfor
   </div>
   </div>

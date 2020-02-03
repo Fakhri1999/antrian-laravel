@@ -8,8 +8,17 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
+  public function getEmployee()
+  {
+    $result = DB::table('petugas')->get();
+    return response()->json(['status' => 'success', 'message' => $result], 200);
+  }
+
   public function addEmployee(Request $request)
   {
+    if ($request->auth != env('API_KEY')) {
+      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+    }
     $insert = [
       'username' => $request->username,
       'nama' => $request->name,
@@ -20,12 +29,19 @@ class EmployeeController extends Controller
     if (!$isUsernameUnique) {
       return response()->json(['status' => 'error', 'message' => 'Username already in use'], 400);
     }
-    DB::table('petugas')->insert($insert);
-    return response()->json(['status' => 'success', 'message' => 'Officer succesfully added'], 201);    
+    $result = DB::table('petugas')->insert($insert);
+    if ($result) {
+      return response()->json(['status' => 'success', 'message' => 'Officer succesfully added'], 201);
+    } else {
+      return response()->json(['status' => 'error', 'message' => 'Something gone wrong. Please fix it ASAP'], 400);
+    }
   }
 
   public function editEmployee(Request $request)
   {
+    if ($request->auth != env('API_KEY')) {
+      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+    }
     $id = $request->id;
     $update = [
       'username' => $request->username,
@@ -36,12 +52,25 @@ class EmployeeController extends Controller
     if (!$isUsernameUnique) {
       return response()->json(['status' => 'error', 'message' => 'Username already in use'], 400);
     }
-    DB::table('petugas')->where('id', $id)->update($update);
-    return response()->json(['status' => 'success', 'message' => 'Officer succesfully edited'], 200);
+    $result = DB::table('petugas')->where('id', $id)->update($update);
+    if ($result) {
+      return response()->json(['status' => 'success', 'message' => 'Officer succesfully edited'], 200);
+    } else {
+      return response()->json(['status' => 'error', 'message' => 'Officer not found'], 404);
+    }
   }
 
-  public function getEmployee(){
-    $result = DB::table('petugas')->get();
-    return response()->json(['status' => 'success', 'message' => $result], 200);
+  public function deleteEmployee(Request $request)
+  {
+    if ($request->auth != env('API_KEY')) {
+      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+    }
+    $id = $request->id;
+    $result = DB::table('petugas')->where('id', $id)->delete();
+    if ($result) {
+      return response()->json(['status' => 'success', 'message' => 'Officer succesfully deleted'], 204);
+    } else {
+      return response()->json(['status' => 'error', 'message' => 'Officer not found'], 404);
+    }
   }
 }

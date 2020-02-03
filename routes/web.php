@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-  return view('home', ['type' => ['A', 'B', 'C', 'D', 'E', 'F']]);
+  return view('home', ['API_KEY' => env("API_KEY"), 'type' => ['A', 'B', 'C', 'D', 'E', 'F']]);
 });
 
 Route::get('admin/login', 'AdminController@showLogin');

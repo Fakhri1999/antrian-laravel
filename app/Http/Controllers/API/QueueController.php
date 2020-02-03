@@ -10,14 +10,14 @@ class QueueController extends Controller
 {
   public function addQueue(Request $request)
   {
+    if ($request->auth != env('API_KEY')) {
+      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+    }
     date_default_timezone_set('Asia/Jakarta');
     $timeNow = date("d-m-Y H:i:s");
     $dateNow = date("d-m-Y");
     $queueType = $request->type;
     $ada = false;
-    if ($request->auth != 'inikodenya') {
-      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
-    }
     $dbData = DB::table('antrian')->orderBy('id', 'desc')->get();
     for ($i = 0; $i < sizeof($dbData); $i++) {
       if (substr($dbData[$i]->nomor_antrian, 0, 1) == $queueType) {

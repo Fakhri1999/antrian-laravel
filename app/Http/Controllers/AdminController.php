@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
   public function showLogin()
   {
-    if(session('admin_username') != null){
+    if (session('admin_username') != null) {
       return redirect('admin');
     }
     return view('admin/login');
@@ -36,12 +36,14 @@ class AdminController extends Controller
     return view('admin/index');
   }
 
-  public function logout(){
+  public function logout()
+  {
     session()->flush();
     return redirect('admin/login');
   }
 
-  public function showPetugas(){
-    return view('admin/data_petugas');
+  public function showPetugas()
+  {
+    return view('admin/data_petugas', ['API_KEY' => env("API_KEY")]);
   }
 }

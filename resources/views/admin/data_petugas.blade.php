@@ -3,10 +3,10 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
+  <input type="hidden" id="API_KEY" value="{{$API_KEY}}">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <a href="#" class="mb-0 btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addEmployee">
+    <a href="#" class="mb-0 btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addEmployeeModal">
       <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Petugas</a>
   </div>
   <div class="card shadow mb-4">
@@ -27,28 +27,6 @@
             </tr>
           </thead>
           <tbody id="isiTablePetugas">
-            <tr>
-              <td>1</td>
-              <td>hannyen</td>
-              <td>M. Firhan Azmi Nor</td>
-              <td>400</td>
-              <td>Loket 1</td>
-              <td class="text-center">
-                <button type="button" class="btn btn-primary mb-1" style="width: 100%">Ubah</button>
-                <button type="button" class="btn btn-danger" style="width: 100%;">Hapus</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>fakhri</td>
-              <td>Fakrhi Imaduddin</td>
-              <td>385</td>
-              <td>Belum Login</td>
-              <td class="text-center">
-                <button type="button" class="btn btn-primary mb-1" style="width: 100%">Ubah</button>
-                <button type="button" class="btn btn-danger" style="width: 100%;">Hapus</button>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -58,7 +36,7 @@
 <!-- /.container-fluid -->
 </div>
 <!-- Add Petugas Modal -->
-<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -90,7 +68,7 @@
   </div>
 </div>
 <!-- Edit Petugas Modal -->
-<div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -102,6 +80,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
+          <input type="hidden" id="petugasIdEdit">
           <label for="exampleInputEmail1">Username</label>
           <input type="text" class="form-control" id="petugasUseranameEdit" placeholder="Masukkan username">
         </div>
@@ -116,7 +95,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-        <button type="button" class="btn btn-primary">Tambah</button>
+        <button type="button" class="btn btn-primary" id="submitEditPetugas">Edit</button>
       </div>
     </div>
   </div>

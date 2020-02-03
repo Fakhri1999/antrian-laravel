@@ -17,9 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1'], function () {
+Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
     Route::post('queue', 'Api\QueueController@addQueue');
     Route::get('employee', 'Api\EmployeeController@getEmployee');
     Route::post('employee', 'Api\EmployeeController@addEmployee');
     Route::put('employee', 'Api\EmployeeController@editEmployee');
+    Route::delete('employee', 'Api\EmployeeController@deleteEmployee');
 });

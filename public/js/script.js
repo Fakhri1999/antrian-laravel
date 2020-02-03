@@ -6,6 +6,7 @@ const baseUrl =
   hostname == "localhost"
     ? `${protocol}//${hostname}:${port}/`
     : `${protocol}//${hostname}/`;
+const API_KEY = $("#API_KEY").val();
 $(document).ready(function() {
   $(".add-queue").on("click", function() {
     let type = $(this).data("type");
@@ -14,7 +15,7 @@ $(document).ready(function() {
       type: "POST",
       data: {
         type,
-        auth: "inikodenya"
+        auth: API_KEY
       },
       beforeSend: () => {
         Swal.fire({
