@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class QueueController extends Controller
 {
-  public function add(Request $request)
+  public function addQueue(Request $request)
   {
     date_default_timezone_set('Asia/Jakarta');
     $timeNow = date("d-m-Y H:i:s");
