@@ -3,6 +3,7 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
+  <input type="hidden" id="API_KEY" value="{{$API_KEY}}">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <a href="#" class="mb-0 btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addServiceModal">
@@ -46,7 +47,7 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="exampleInputEmail1">Nama Layanan</label>
-          <input type="text" class="form-control" id="layananUseranameAdd" placeholder="Masukkan nama">
+          <input type="text" class="form-control" id="layananNamaAdd" placeholder="Masukkan nama" required>
         </div>
       </div>
       <div class="modal-footer">
@@ -71,7 +72,7 @@
         <div class="form-group">
           <input type="hidden" id="layananIdEdit">
           <label for="exampleInputEmail1">Nama Layanan</label>
-          <input type="text" class="form-control" id="layananNamaEdit" placeholder="Masukkan nama">
+          <input type="text" class="form-control" id="layananNamaEdit" placeholder="Masukkan nama" required>
         </div>
       </div>
       <div class="modal-footer">
@@ -83,4 +84,8 @@
 </div>
 <!-- End of Main Content -->
 
+@endsection
+
+@section('js')
+<script src="{{asset('js/layanan.js')}}"></script>
 @endsection

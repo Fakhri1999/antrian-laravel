@@ -29,5 +29,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
     Route::post('service', 'Api\ServiceController@addService');
     Route::put('service', 'Api\ServiceController@editService');
     Route::delete('service', 'Api\ServiceController@deleteService');
+    Route::put('service/change-status', 'Api\ServiceController@changeStatusService');
 
 });

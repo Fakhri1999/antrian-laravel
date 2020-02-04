@@ -59,20 +59,9 @@
         <a class="nav-link" href="{{url('admin/petugas')}}">
           <span>Petugas</span>
         </a>
-        {{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-          aria-controls="collapseTwo">
-          <span>Petugas</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menu Petugas</h6>
-            <a class="collapse-item" href="buttons.html">Tambah Petugas</a>
-            <a class="collapse-item" href="cards.html">Data Petugas </a>
-          </div>
-        </div> --}}
       </li>
 
-      <li class="nav-item mt-0">
+      <li class="nav-item">
         <a class="nav-link" href="{{url('admin/layanan')}}">
           <span>Layanan</span>
         </a>

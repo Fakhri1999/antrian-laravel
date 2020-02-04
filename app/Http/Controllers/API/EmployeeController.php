@@ -68,7 +68,7 @@ class EmployeeController extends Controller
     $id = $request->id;
     $result = DB::table('petugas')->where('id', $id)->delete();
     if ($result) {
-      return response()->json(['status' => 'success', 'message' => 'Officer succesfully deleted'], 204);
+      return response()->json([], 204);
     } else {
       return response()->json(['status' => 'error', 'message' => 'Officer not found'], 404);
     }

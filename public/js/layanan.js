@@ -11,16 +11,13 @@ let dataLayanan;
 $(document).ready(function() {
   refreshLayanan();
   $("#submitTambahLayanan").on("click", function() {
-    let username = $("#layananUseranameAdd").val();
-    let name = $("#layananNamaAdd").val();
-    let pin = $("#layananPinAdd").val();
+    let nama = $("#layananNamaAdd").val();
+    console.log(nama);
     $.ajax({
       url: `${baseUrl}api/v1/service`,
       type: "POST",
       data: {
-        username,
-        name,
-        pin,
+        nama,
         auth: API_KEY
       },
       beforeSend: () => {
@@ -41,16 +38,15 @@ $(document).ready(function() {
           });
         }
         $("#addServiceModal").modal("hide");
-        $("#layananUseranameAdd").val("");
-        $("#layananNamaAdd").val("");
-        $("#layananPinAdd").val("");
+        $("#layananNameAdd").val("");
         refreshLayanan();
       },
       error: async res => {
+        console.log(res.responseText);
         Swal.fire({
           icon: "error",
           title: "ERROR",
-          text: "Username telah digunakan!"
+          text: "Layanan telah ada!"
         });
       }
     });
@@ -58,24 +54,18 @@ $(document).ready(function() {
   $("#isiTableLayanan").on("click", ".editLayanan", function() {
     let nomer = $(this).data("nomer");
     $("#layananIdEdit").val(dataLayanan[nomer].id);
-    $("#layananUseranameEdit").val(dataLayanan[nomer].username);
-    $("#layananNamaEdit").val(dataLayanan[nomer].nama);
-    $("#layananPinEdit").val(dataLayanan[nomer].pin);
+    $("#layananNamaEdit").val(dataLayanan[nomer].nama_layanan);
     $("#editServiceModal").modal("show");
   });
   $("#submitEditLayanan").on("click", function() {
-    let username = $("#layananUseranameEdit").val();
-    let name = $("#layananNamaEdit").val();
-    let pin = $("#layananPinEdit").val();
+    let nama = $("#layananNamaEdit").val();
     let id = $("#layananIdEdit").val();
     $.ajax({
       url: `${baseUrl}api/v1/service`,
       type: "PUT",
       data: {
         id,
-        username,
-        name,
-        pin,
+        nama,
         auth: API_KEY
       },
       beforeSend: () => {
@@ -98,10 +88,11 @@ $(document).ready(function() {
         refreshLayanan();
       },
       error: async res => {
+        console.log(res.responseText);
         Swal.fire({
           icon: "error",
           title: "ERROR",
-          text: "Username telah digunakan!"
+          text: "Layanan telah ada!"
         });
       }
     });
@@ -109,7 +100,7 @@ $(document).ready(function() {
   $("#isiTableLayanan").on("click", ".hapusLayanan", function() {
     let nomer = $(this).data("nomer");
     Swal.fire({
-      title: `Hapus Layanan ${dataLayanan[nomer].nama}?`,
+      title: `Hapus Layanan ${dataLayanan[nomer].nama_layanan}?`,
       text: "Layanan yang sudah dihapus tidak dapat dikembalikan",
       icon: "warning",
       showCancelButton: true,
@@ -155,6 +146,43 @@ $(document).ready(function() {
       }
     });
   });
+  $("#isiTableLayanan").on("click", ".gantiStatusLayanan", function() {
+    let nomer = $(this).data("nomer");
+    $.ajax({
+      url: `${baseUrl}api/v1/service/change-status`,
+      type: "PUT",
+      data: {
+        id: dataLayanan[nomer].id,
+        auth: API_KEY
+      },
+      beforeSend: () => {
+        Swal.fire({
+          title: "Proses",
+          text: "Harap tunggu",
+          showConfirmButton: false,
+          allowOutsideClick: false
+        });
+      },
+      success: async (res, status, xhr) => {
+        if (xhr.status == 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Sukses",
+            text: "Status layanan berhasil diganti"
+          });
+        }
+        refreshLayanan();
+      },
+      error: async res => {
+        console.log(res);
+        Swal.fire({
+          icon: "error",
+          title: "ERROR",
+          text: "Layanan tidak ditemukan"
+        });
+      }
+    });
+  });
 });
 
 function refreshLayanan() {
@@ -168,13 +196,16 @@ function refreshLayanan() {
         dataLayanan = res.message;
         $("#isiTableLayanan").html("");
         res.message.forEach(e => {
-          render += `<tr><td>${count}</td><td>${e.username}</td><td>${e.nama}</td><td>${e.pin}</td>`;
+          render += `<tr><td>${count}</td><td>${e.nama_layanan}</td>`;
+          render += e.status == 0 ? `<td>Nonaktif</td>` : `<td>Aktif</td>`;
+          render += `<td>`;
           render +=
             e.status == 0
-              ? `<td>Belum Login</td>`
-              : `<td>Loket ${e.status}</td>`;
-          render += `<td>
-          <button type="button" class="btn btn-primary mb-1 editLayanan" style="width: 100%" data-nomer="${count -
+              ? `<button type="button" class="btn btn-success mb-1 gantiStatusLayanan" style="width: 100%" data-nomer="${count -
+                  1}">Aktifkan</button>`
+              : `<button type="button" class="btn btn-danger mb-1 gantiStatusLayanan" style="width: 100%" data-nomer="${count -
+                  1}">Nonaktifkan</button>`;
+          render += `<button type="button" class="btn btn-primary mb-1 editLayanan" style="width: 100%" data-nomer="${count -
             1}">Ubah</button>
           <button type="button" class="btn btn-danger hapusLayanan" style="width: 100%;" data-nomer="${count -
             1}">Hapus</button></td></tr>`;

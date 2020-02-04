@@ -21,7 +21,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdminLoggedIn']], functio
   Route::get('/', 'AdminController@index');
   Route::get('/logout', 'AdminController@logout');
   Route::get('/petugas', 'AdminController@showPetugas');
-  Route::get('/layanan', function () {
-  	return view('admin/layanan');
-  });
+  Route::get('/layanan', 'AdminController@showLayanan');
 });
