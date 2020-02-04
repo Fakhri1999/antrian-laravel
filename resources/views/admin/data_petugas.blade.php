@@ -49,15 +49,15 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="exampleInputEmail1">Username</label>
-          <input type="text" class="form-control" id="petugasUseranameAdd" placeholder="Masukkan username">
+          <input type="text" class="form-control" id="petugasUseranameAdd" placeholder="Masukkan username" required>
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Nama</label>
-          <input type="text" class="form-control" id="petugasNamaAdd" placeholder="Masukkan nama">
+          <input type="text" class="form-control" id="petugasNamaAdd" placeholder="Masukkan nama" required>
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Pin</label>
-          <input type="text" class="form-control" id="petugasPinAdd" placeholder="Masukkan pin">
+          <input type="text" class="form-control" id="petugasPinAdd" placeholder="Masukkan pin" required>
         </div>
       </div>
       <div class="modal-footer">
@@ -82,15 +82,15 @@
         <div class="form-group">
           <input type="hidden" id="petugasIdEdit">
           <label for="exampleInputEmail1">Username</label>
-          <input type="text" class="form-control" id="petugasUseranameEdit" placeholder="Masukkan username">
+          <input type="text" class="form-control" id="petugasUseranameEdit" placeholder="Masukkan username" required>
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Nama</label>
-          <input type="text" class="form-control" id="petugasNamaEdit" placeholder="Masukkan nama">
+          <input type="text" class="form-control" id="petugasNamaEdit" placeholder="Masukkan nama" required>
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Pin</label>
-          <input type="text" class="form-control" id="petugasPinEdit" placeholder="Masukkan pin">
+          <input type="text" class="form-control" id="petugasPinEdit" placeholder="Masukkan pin" required>
         </div>
       </div>
       <div class="modal-footer">
