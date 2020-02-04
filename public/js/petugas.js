@@ -32,6 +32,7 @@ $(document).ready(function() {
         });
       },
       success: async (res, status, xhr) => {
+        console.log(res);
         if (xhr.status == 201) {
           Swal.fire({
             icon: "success",
@@ -46,7 +47,6 @@ $(document).ready(function() {
         refreshPetugas();
       },
       error: async res => {
-        console.log(res);
         Swal.fire({
           icon: "error",
           title: "ERROR",

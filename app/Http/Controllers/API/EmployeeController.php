@@ -27,13 +27,13 @@ class EmployeeController extends Controller
     ];
     $isUsernameUnique = DB::table('petugas')->where('username', $insert['username'])->first() == null;
     if (!$isUsernameUnique) {
-      return response()->json(['status' => 'error', 'message' => 'Username already in use'], 400);
+      return response()->json(['status' => 'success', 'message' => 'username dipake'], 200);
     }
     $result = DB::table('petugas')->insert($insert);
     if ($result) {
       return response()->json(['status' => 'success', 'message' => 'Officer succesfully added'], 201);
     } else {
-      return response()->json(['status' => 'error', 'message' => 'Something gone wrong. Please fix it ASAP'], 400);
+      return response()->json(['status' => 'error', 'message' => 'Something gone wrong. Please fix it ASAP'], 200);
     }
   }
 
