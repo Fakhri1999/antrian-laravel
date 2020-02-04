@@ -46,4 +46,9 @@ class AdminController extends Controller
   {
     return view('admin/data_petugas', ['API_KEY' => env("API_KEY")]);
   }
+
+  public function showLayanan()
+  {
+    return view('admin/layanan', ['API_KEY' => env("API_KEY")]);
+  }
 }
