@@ -26,13 +26,15 @@ class QueueController extends Controller
           DB::table('antrian')->insert([
             'nomor_antrian' => $queueType . '001',
             'waktu_pembuatan' => $timeNow,
-            'status' => '1'
+            'status' => '1',
+            'kepuasan' => '0'
           ]);
         } else {
           DB::table('antrian')->insert([
             'nomor_antrian' => ++$dbData[$i]->nomor_antrian,
             'waktu_pembuatan' => $timeNow,
-            'status' => '1'
+            'status' => '1',
+            'kepuasan' => '0'
           ]);
         }
         $ada = true;
@@ -43,7 +45,8 @@ class QueueController extends Controller
       DB::table('antrian')->insert([
         'nomor_antrian' => $queueType . '001',
         'waktu_pembuatan' => $timeNow,
-        'status' => '1'
+        'status' => '1',
+        'kepuasan' => '0'
       ]);
     }
     return response()->json(['status' => 'success', 'message' => 'Queue succesfully added'], 201);

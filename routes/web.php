@@ -22,13 +22,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdminLoggedIn']], functio
   Route::get('/logout', 'AdminController@logout');
   Route::get('/petugas', 'AdminController@showPetugas');
   Route::get('/layanan', 'AdminController@showLayanan');
+  Route::get('/loket', 'AdminController@showLoket');
 });
 
 Route::get('petugas/login', 'PetugasController@showLogin');
 Route::post('petugas/login', 'PetugasController@login');
 Route::group(['prefix' => 'petugas', 'middleware' => ['isPetugasLoggedIn']], function () {
   Route::get('/', 'PetugasController@index');
-  Route::get('/logout', 'AdminController@logout');
-  Route::get('/petugas', 'AdminController@showPetugas');
-  Route::get('/layanan', 'AdminController@showLayanan');
+  Route::get('/logout', 'PetugasController@logout');
 });

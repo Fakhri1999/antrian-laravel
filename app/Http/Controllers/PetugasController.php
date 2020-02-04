@@ -41,6 +41,6 @@ class PetugasController extends Controller
   public function logout()
   {
     session()->flush();
-    return redirect('admin/login');
+    return redirect('petugas/login');
   }
 }

@@ -10,7 +10,7 @@ class EmployeeController extends Controller
 {
   public function getEmployee()
   {
-    $result = DB::table('petugas')->get();
+    $result = DB::table('petugas')->where('id', '>', '0')->get();
     return response()->json(['status' => 'success', 'message' => $result], 200);
   }
 

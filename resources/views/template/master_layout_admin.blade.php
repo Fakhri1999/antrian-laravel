@@ -60,10 +60,14 @@
           <span>Petugas</span>
         </a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link" href="{{url('admin/layanan')}}">
           <span>Layanan</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('admin/loket')}}">
+          <span>Loket</span>
         </a>
       </li>
 

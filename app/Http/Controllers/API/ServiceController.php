@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
   public function getService()
   {
-    $result = DB::table('layanan')->get();
+    $result = DB::table('layanan')->where('id', '>', '0')->get();
     return response()->json(['status' => 'success', 'message' => $result], 200);
   }
 

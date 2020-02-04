@@ -53,4 +53,9 @@ class AdminController extends Controller
   {
     return view('admin/layanan', ['API_KEY' => env("API_KEY")]);
   }
+
+  public function showLoket()
+  {
+    return view('admin/loket', ['API_KEY' => env("API_KEY")]);
+  }
 }
