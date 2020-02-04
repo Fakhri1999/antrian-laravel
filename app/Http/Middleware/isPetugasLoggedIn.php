@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class isAdminLoggedIn
+class isPetugasLoggedIn
 {
   /**
    * Handle an incoming request.
@@ -15,10 +15,10 @@ class isAdminLoggedIn
    */
   public function handle($request, Closure $next)
   {
-    if (session('admin_username') == null) {
-      return redirect('admin/login');
-    } else if (session('petugas_username') != null) {
-      return redirect('petugas');
+    if (session('petugas_username') == null) {
+      return redirect('petugas/login');
+    } else if (session('admin_username') != null) {
+      return redirect('admin');
     }
     return $next($request);
   }

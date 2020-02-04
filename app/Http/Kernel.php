@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'cors' => \App\Http\Middleware\Cors::class,
         'isAdminLoggedIn' => \App\Http\Middleware\isAdminLoggedIn::class,
+        'isPetugasLoggedIn' => \App\Http\Middleware\isPetugasLoggedIn::class,
     ];
 }

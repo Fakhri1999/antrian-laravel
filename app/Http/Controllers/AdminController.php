@@ -12,6 +12,8 @@ class AdminController extends Controller
   {
     if (session('admin_username') != null) {
       return redirect('admin');
+    } else if (session('petugas_username') != null) {
+      return redirect('petugas');
     }
     return view('admin/login');
   }

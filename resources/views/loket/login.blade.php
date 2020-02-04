@@ -40,15 +40,15 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Login dengan username & pin petugas</h1>
                   </div>
-                  <form class="user" method="POST" action="{{url('admin/login')}}">
+                  <form class="user" method="POST" action="{{url('petugas/login')}}">
                     {{ csrf_field() }}
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="username"
                         aria-describedby="username" name="username" placeholder="Username" required>
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="password"
-                        aria-describedby="password" name="password" placeholder="PIN" required>
+                      <input type="password" class="form-control form-control-user" id="pin"
+                        aria-describedby="password" name="pin" placeholder="PIN" required>
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
