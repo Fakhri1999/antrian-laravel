@@ -72,6 +72,12 @@
         </div> --}}
       </li>
 
+      <li class="nav-item mt-0">
+        <a class="nav-link" href="{{url('admin/layanan')}}">
+          <span>Layanan</span>
+        </a>
+      </li>
+
       <!-- Nav Item - Utilities Collapse Menu -->
 
       <!-- Divider -->
