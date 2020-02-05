@@ -4,6 +4,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <input type="hidden" id="API_KEY" value="{{$API_KEY}}">
+  <input type="hidden" id="petugas_id" value="{{session('petugas_id')}}">
   <!-- Page Heading -->
   {{-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <a href="#" class="mb-0 btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCounterModal">

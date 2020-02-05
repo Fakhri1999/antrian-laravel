@@ -30,4 +30,5 @@ Route::post('petugas/login', 'PetugasController@login');
 Route::group(['prefix' => 'petugas', 'middleware' => ['isPetugasLoggedIn']], function () {
   Route::get('/', 'PetugasController@index');
   Route::get('/logout', 'PetugasController@logout');
+  Route::get('/{id}', 'PetugasController@ambilLoket');
 });

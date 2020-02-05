@@ -29,7 +29,7 @@ class PetugasController extends Controller
         text: "Username / pin salah"
       });</script>');
     }
-    session(['petugas_username' => $username, 'petugas_name' => $result->nama]);
+    session(['petugas_username' => $username, 'petugas_name' => $result->nama, 'petugas_id' => $result->id]);
     return redirect('petugas');
   }
 
@@ -42,5 +42,24 @@ class PetugasController extends Controller
   {
     session()->flush();
     return redirect('petugas/login');
+  }
+
+  public function ambilLoket($id)
+  {
+    $result = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
+    if($result != null){
+      echo "Maaf, Anda sudah mengambil $result->nomor_loket";
+      return;
+    }
+    $update = [
+      'id_petugas' => session('petugas_id'),
+      'status' => '1'
+    ];
+    $resultUpdate = DB::table('loket')->where('id', $id)->update($update);
+    if($resultUpdate){
+      echo "Selamat datang. Anda berhasil mengambil Loket $id";
+    } else {
+      echo "Error saat proses pengambilan loket. Silahkan menghubungi pihak IT";
+    }
   }
 }
