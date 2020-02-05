@@ -34,7 +34,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('admin')}}">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('petugas')}}">
         <div class="sidebar-brand-text mx-3">Antrianku</div>
       </a>
 
@@ -43,7 +43,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="{{url('admin')}}">
+        <a class="nav-link" href="{{url('petugas')}}">
           <span>Dashboard</span>
         </a>
       </li>
@@ -58,17 +58,7 @@
 
       <!-- Nav Item - Pages Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="{{url('admin/petugas')}}">
-          <span>Petugas</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('admin/layanan')}}">
-          <span>Layanan</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('admin/loket')}}">
+        <a class="nav-link" href="{{url('petugas/loket')}}">
           <span>Loket</span>
         </a>
       </li>

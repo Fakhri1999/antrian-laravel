@@ -12,7 +12,7 @@ class PetugasController extends Controller
   {
     if (session('petugas_username') != null) {
       return redirect('petugas');
-    } else if(session('admin_username') != null){
+    } else if (session('admin_username') != null) {
       return redirect('admin');
     }
     return view('loket/login');
@@ -35,7 +35,7 @@ class PetugasController extends Controller
 
   public function index()
   {
-    return view('loket/index');
+    return view('loket/index', ['API_KEY' => env("API_KEY")]);
   }
 
   public function logout()
