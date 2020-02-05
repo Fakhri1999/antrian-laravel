@@ -88,11 +88,10 @@ $(document).ready(function() {
         refreshLayanan();
       },
       error: async res => {
-        console.log(res.responseText);
         Swal.fire({
           icon: "error",
           title: "ERROR",
-          text: "Layanan telah ada!"
+          text: "Nama layanan telah ada!"
         });
       }
     });
@@ -106,7 +105,8 @@ $(document).ready(function() {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Ya, hapus!"
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Tidak"
     }).then(result => {
       if (result.value) {
         $.ajax({
@@ -189,6 +189,9 @@ function refreshLayanan() {
   $.ajax({
     url: `${baseUrl}api/v1/service`,
     type: "GET",
+    beforeSend: () => {
+      $("#loader").show();
+    },
     success: (res, status, xhr) => {
       if (xhr.status == 200) {
         let render = "";
@@ -212,6 +215,7 @@ function refreshLayanan() {
           count++;
         });
         $("#isiTableLayanan").html(render);
+        $("#loader").hide();
       }
     }
   });

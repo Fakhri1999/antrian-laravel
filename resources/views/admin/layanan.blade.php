@@ -25,6 +25,8 @@
             </tr>
           </thead>
           <tbody id="isiTableLayanan">
+            <div id="loader">
+            </div>
           </tbody>
         </table>
       </div>

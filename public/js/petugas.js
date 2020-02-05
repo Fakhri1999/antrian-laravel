@@ -116,7 +116,7 @@ $(document).ready(function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya, hapus!",
-      cancelButtonText: "Tidak",
+      cancelButtonText: "Tidak"
     }).then(result => {
       if (result.value) {
         $.ajax({
@@ -161,6 +161,9 @@ function refreshPetugas() {
   $.ajax({
     url: `${baseUrl}api/v1/employee`,
     type: "GET",
+    beforeSend: () => {
+      $("#loader").show();
+    },
     success: (res, status, xhr) => {
       if (xhr.status == 200) {
         let render = "";
@@ -181,6 +184,7 @@ function refreshPetugas() {
           count++;
         });
         $("#isiTablePetugas").html(render);
+        $("#loader").hide();
       }
     }
   });

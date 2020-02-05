@@ -32,5 +32,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
   Route::put('service/change-status', 'Api\ServiceController@changeStatusService');
 
   Route::get('counter', 'Api\CounterController@getAllCounter');
+  Route::post('counter', 'Api\CounterController@addCounter');
+  Route::delete('counter', 'Api\CounterController@deleteCounter');
   Route::post('counter/reset/all', 'Api\CounterController@resetAllCounter');
+  Route::post('counter/reset', 'Api\CounterController@resetSingleCounter');
 });

@@ -51,7 +51,7 @@ class ServiceController extends Controller
     if ($result) {
       return response()->json(['status' => 'success', 'message' => 'Service succesfully edited'], 200);
     } else {
-      return response()->json(['status' => 'error', 'message' => 'Service not found'], 404);
+      return response()->json(['status' => 'error', 'message' => 'Something gone wrong. Please fix it ASAP'], 400);
     }
   }
 
@@ -84,7 +84,7 @@ class ServiceController extends Controller
     if ($result) {
       return response()->json(['status' => 'success', 'message' => 'Service status succesfully changed'], 200);
     } else {
-      return response()->json(['status' => 'error', 'message' => 'Service not found'], 404);
+      return response()->json(['status' => 'error', 'message' => 'Something gone wrong. Please fix it ASAP'], 400);
     }
   }
 }

@@ -27,6 +27,8 @@
             </tr>
           </thead>
           <tbody id="isiTablePetugas">
+            <div id="loader">
+            </div>
           </tbody>
         </table>
       </div>
