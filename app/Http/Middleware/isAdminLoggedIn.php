@@ -15,10 +15,11 @@ class isAdminLoggedIn
    */
   public function handle($request, Closure $next)
   {
+    if (session('petugas_username') != null) {
+      return redirect('petugas');
+    }
     if (session('admin_username') == null) {
       return redirect('admin/login');
-    } else if (session('petugas_username') != null) {
-      return redirect('petugas');
     }
     return $next($request);
   }
