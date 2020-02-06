@@ -13,7 +13,7 @@ class CounterController extends Controller
     $result = DB::table('loket AS lo')
       ->join('petugas AS p', 'lo.id_petugas', '=', 'p.id')
       ->join('antrian AS a', 'lo.id_antrian', '=', 'a.id')
-      ->join('layanan AS la', 'a.pilihan_layanan', '=', 'la.id')
+      ->join('layanan AS la', 'a.id_layanan', '=', 'la.id')
       ->select('lo.*', 'a.nomor_antrian', 'p.nama as nama_petugas', 'la.nama_layanan')
       ->orderBy('lo.id', 'asc')
       ->get();

@@ -6,13 +6,12 @@
   <input type="hidden" id="petugas_id" value="{{session('petugas_id')}}">
   <!-- Page Heading -->
   <BUTTON>KELUAR</BUTTON>
-  <h1>HALO M. FIRHAN AZMI NOR</h1>
-  <h1>NO ANTRIAN SEKARANG<br>301</h1>
+  <h1>HALO <b>{{strtoupper(session('petugas_name'))}}</b></h1>
+  <h2>NO ANTRIAN SEKARANG<br><b>301</b></h2>
   <button>RECALL</button>
-  <select class="form-control">
-  <option>Default select</option>
-</select>
-<BUTTON>SKIP</BUTTON><BUTTON>NEXT</BUTTON>
+  <select class="form-control" id="list-antrian">
+  </select>
+  <BUTTON>SKIP</BUTTON><BUTTON>NEXT</BUTTON>
 </div>
 <!-- /.container-fluid -->
 </div>
@@ -44,5 +43,5 @@
 
 @endsection
 @section('js')
-<script src="{{asset('js/loket-petugas.js')}}"></script>
+<script src="{{asset('js/loket-petugas-single.js')}}"></script>
 @endsection

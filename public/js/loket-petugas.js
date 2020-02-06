@@ -39,7 +39,7 @@ function refreshLoket() {
             <div class="card shadow">
               <div class="card-header">`
               if(e.id_petugas == petugas_id){
-                render += `<h6 class="m-0 font-weight-bold text-warning">${e.nomor_loket} (LOKET ANDA)</h6>`
+                render += `<h6 class="m-0 font-weight-bold text-warning">${e.nomor_loket} <a href="${baseUrl}petugas/loket/${e.id}"><b>(Menuju loket)</b></a></h6>`
               } else {
                 render += `<h6 class="m-0 font-weight-bold text-primary">${e.nomor_loket}</h6>`
               }

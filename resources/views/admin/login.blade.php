@@ -44,7 +44,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="username"
-                        aria-describedby="username" name="username" placeholder="Username" required>
+                        aria-describedby="username" name="username" placeholder="Username" required autofocus>
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="password"

@@ -14,41 +14,53 @@ class QueueController extends Controller
       return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
     }
     date_default_timezone_set('Asia/Jakarta');
-    $timeNow = date("d-m-Y H:i:s");
+    $timeNow = date("H:i:s");
     $dateNow = date("d-m-Y");
     $queueType = $request->type;
     $ada = false;
-    $dbData = DB::table('antrian')->orderBy('id', 'desc')->get();
-    for ($i = 0; $i < sizeof($dbData); $i++) {
-      if (substr($dbData[$i]->nomor_antrian, 0, 1) == $queueType) {
-        $latestDate = explode(" ", $dbData[$i]->waktu_pembuatan)[0];
-        if ($latestDate != $dateNow) {
-          DB::table('antrian')->insert([
-            'nomor_antrian' => $queueType . '001',
-            'waktu_pembuatan' => $timeNow,
-            'status' => '1',
-            'kepuasan' => '0'
-          ]);
-        } else {
-          DB::table('antrian')->insert([
-            'nomor_antrian' => ++$dbData[$i]->nomor_antrian,
-            'waktu_pembuatan' => $timeNow,
-            'status' => '1',
-            'kepuasan' => '0'
-          ]);
-        }
-        $ada = true;
-        break;
-      }
-    }
-    if (!$ada) {
+    $dbData = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->orderBy('id', 'desc')->get();
+    if ($dbData == null) {
       DB::table('antrian')->insert([
         'nomor_antrian' => $queueType . '001',
-        'waktu_pembuatan' => $timeNow,
+        'tanggal_pembuatan' => $dateNow,
+        'jam_pembuatan' => $timeNow,
         'status' => '1',
-        'kepuasan' => '0'
+        'kepuasan' => '0',
+        'id_layanan' => hurufLayananToAngkaLayanan($queueType),
+        'id_petugas' => '0'
       ]);
+    } else {
+      for ($i = 0; $i < sizeof($dbData); $i++) {
+        if (substr($dbData[$i]->nomor_antrian, 0, 1) == $queueType) {
+          DB::table('antrian')->insert([
+            'nomor_antrian' => ++$dbData[$i]->nomor_antrian,
+            'tanggal_pembuatan' => $dateNow,
+            'jam_pembuatan' => $timeNow,
+            'status' => '1',
+            'kepuasan' => '0',
+            'id_layanan' => hurufLayananToAngkaLayanan($queueType),
+            'id_petugas' => '0'
+          ]);
+          $ada = true;
+          break;
+        }
+      }
+      if (!$ada) {
+        DB::table('antrian')->insert([
+          'nomor_antrian' => $queueType . '001',
+          'tanggal_pembuatan' => $dateNow,
+          'jam_pembuatan' => $timeNow,
+          'status' => '1',
+          'kepuasan' => '0',
+          'id_layanan' => hurufLayananToAngkaLayanan($queueType),
+          'id_petugas' => '0'
+        ]);
+      }
     }
     return response()->json(['status' => 'success', 'message' => 'Queue succesfully added'], 201);
+  }
+
+  private function hurufLayananToAngkaLayanan($number){
+    return ord($number) - 64;
   }
 }
