@@ -26,7 +26,7 @@ class QueueController extends Controller
         'jam_pembuatan' => $timeNow,
         'status' => '1',
         'kepuasan' => '0',
-        'id_layanan' => hurufLayananToAngkaLayanan($queueType),
+        'id_layanan' => $this->hurufLayananToAngkaLayanan($queueType),
         'id_petugas' => '0'
       ]);
     } else {
@@ -38,7 +38,7 @@ class QueueController extends Controller
             'jam_pembuatan' => $timeNow,
             'status' => '1',
             'kepuasan' => '0',
-            'id_layanan' => hurufLayananToAngkaLayanan($queueType),
+            'id_layanan' => $this->hurufLayananToAngkaLayanan($queueType),
             'id_petugas' => '0'
           ]);
           $ada = true;
@@ -52,7 +52,7 @@ class QueueController extends Controller
           'jam_pembuatan' => $timeNow,
           'status' => '1',
           'kepuasan' => '0',
-          'id_layanan' => hurufLayananToAngkaLayanan($queueType),
+          'id_layanan' => $this->hurufLayananToAngkaLayanan($queueType),
           'id_petugas' => '0'
         ]);
       }
