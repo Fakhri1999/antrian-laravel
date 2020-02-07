@@ -3,15 +3,16 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-  <input type="hidden" id="petugas_id" value="{{session('petugas_id')}}">
+  <input type="hidden" id="petugas-id" value="{{session('petugas_id')}}">
   <!-- Page Heading -->
-  <BUTTON>KELUAR</BUTTON>
+  <input type="hidden" id="current-antrian-id">
+  <button id="keluar" class="btn btn-danger"><b>KELUAR</b></button>
   <h1>HALO <b>{{strtoupper(session('petugas_name'))}}</b></h1>
-  <h2>NO ANTRIAN SEKARANG<br><b>301</b></h2>
-  <button>RECALL</button>
-  <select class="form-control" id="list-antrian">
+  <h2>NO ANTRIAN SEKARANG<br><b><span id="current-antrian">-</span></b></h2>
+  <button class="btn btn-warning text-dark" id="recall-btn"><b>RECALL</b></button>
+  <select class="form-control mb-2 mt-2" id="list-antrian">
   </select>
-  <BUTTON>SKIP</BUTTON><BUTTON>NEXT</BUTTON>
+  <button id="skip" class="btn btn-success"><b>SKIP</b></button> <button id="next" class="btn btn-primary"><b>NEXT</b></button>
 </div>
 <!-- /.container-fluid -->
 </div>

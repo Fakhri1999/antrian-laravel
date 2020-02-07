@@ -30,6 +30,11 @@ class PetugasController extends Controller
       });</script>');
     }
     session(['petugas_username' => $username, 'petugas_name' => $result->nama, 'petugas_id' => $result->id]);
+    $petugasMasuk = DB::table('loket')->where('id_petugas', $result->id)->first();
+    if ($petugasMasuk != null) {
+      session(['petugas_masuk' => true, 'nomor_loket' => $petugasMasuk->id]);
+      return redirect('petugas/loket/' . $petugasMasuk->id);
+    }
     return redirect('petugas');
   }
 
@@ -40,6 +45,11 @@ class PetugasController extends Controller
 
   public function allLoket()
   {
+    $petugasMasuk = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
+    if ($petugasMasuk != null) {
+      session(['petugas_masuk' => true, 'nomor_loket' => $petugasMasuk->id]);
+      return redirect('petugas/loket/' . $petugasMasuk->id);
+    }
     return view('loket/index', ['API_KEY' => env("API_KEY")]);
   }
 
@@ -52,15 +62,15 @@ class PetugasController extends Controller
   public function ambilLoket($id)
   {
     if (session('petugas_masuk')) {
-      if($id != session('nomor_loket')){
-        return redirect("petugas/loket/$id");
+      if ($id != session('nomor_loket')) {
+        return redirect("petugas/loket/" . session('nomor_loket'));
       } else {
         return view('loket/loket');
       }
     }
     $result = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
     if ($result != null) {
-      session(['petugas_masuk' => true]);
+      session(['petugas_masuk' => true, 'nomor_loket' => $result->id]);
       return view('loket/loket');
     }
     $update = [
@@ -74,5 +84,17 @@ class PetugasController extends Controller
     } else {
       echo "Error saat proses pengambilan loket. Silahkan menghubungi pihak IT";
     }
+  }
+
+  public function exitCounter()
+  {
+    if (!session('petugas_masuk')) {
+      return redirect("petugas/loket");
+    }
+
+    session()->forget('petugas_masuk');
+    session()->forget('nomor_loket');
+    DB::table('loket')->where('id_petugas', session('petugas_id'))->update(['status' => '0', 'id_petugas' => '0']);
+    return redirect('petugas/loket');
   }
 }

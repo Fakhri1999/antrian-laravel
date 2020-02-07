@@ -31,7 +31,8 @@ $(document).ready(function() {
             icon: "success",
             title: "Sukses",
             text: "Antrian berhasil ditambahkan",
-            timer: 1000
+            timer: 1000,
+            timerProgressBar: true
           });
         }
       },

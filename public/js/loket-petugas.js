@@ -48,7 +48,7 @@ function refreshLoket() {
           if (e.status == 0) {
             if(!sudahMasuk){
               render += `Status : <b>Nonaktif</b>
-                    <a href="${baseUrl}petugas/${e.id}" class="btn btn-primary mb-1 mt-1 masukLoket" style="width: 100%">Masuk</a>
+                    <a href="${baseUrl}petugas/loket/${e.id}" class="btn btn-primary mb-1 mt-1 masukLoket" style="width: 100%">Masuk</a>
                   </div>
                 </div>
               </div>`;
@@ -75,3 +75,4 @@ function refreshLoket() {
     }
   });
 }
+
