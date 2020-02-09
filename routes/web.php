@@ -31,6 +31,7 @@ Route::group(['prefix' => 'petugas', 'middleware' => ['isPetugasLoggedIn']], fun
   Route::get('/loket/keluar', 'PetugasController@exitCounter');
   Route::get('/loket/{id}', 'PetugasController@counter');
   Route::get('/loket/ambil/{id}', 'PetugasController@takeCounter');
+  Route::get('/loket/{id}/kepuasan', 'PetugasController@showKepuasan');
   Route::get('/logout', 'PetugasController@logout');
 });
 

@@ -68,7 +68,7 @@ class QueueController extends Controller
     return range('A', 'Z')[$number - 1];
   }
 
-  public function getQueueForPetugas()
+  public function getQueueForEmployee()
   {
     date_default_timezone_set('Asia/Jakarta');
     $dateNow = date("d-m-Y");
@@ -114,5 +114,31 @@ class QueueController extends Controller
     DB::table('antrian')->where('id', $result[0]->id)->update(['id_petugas' => $petugasId, 'status' => '10']);
     event(new QueueUpdated("New queue. Please update yours"));
     return response()->json(['status' => 'success', 'message' => $result[0]], 200);
+  }
+
+  public function getCurrentQueueOfAnEmployee(Request $request, $petugasId)
+  {
+    date_default_timezone_set('Asia/Jakarta');
+    $result = DB::table('antrian')
+      ->where('tanggal_pembuatan', date("d-m-Y"))
+      ->where('id_petugas', $petugasId)
+      ->where('kepuasan', 'TIDAK MENGISI')
+      ->orderBy('jam_pembuatan', 'desc')
+      ->limit(1)
+      ->get();
+    return response()->json(['status' => 'success', 'message' => $result], 200);
+  }
+
+  public function updateKepuasanOfQueue(Request $request)
+  {
+    if ($request->auth != env('API_KEY')) {
+      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+    }
+    $antrianId = $request->antrianId;
+    $update = [
+      'kepuasan' => $request->kepuasan
+    ];
+    return response()->json(['status' => 'success', 'message' => $update], 200);
+    DB::table('antrian')->where('id', $antrianId)->update($update);
   }
 }

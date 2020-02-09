@@ -19,9 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
   Route::post('queue', 'Api\QueueController@addQueue');
-  Route::get('queue/petugas', 'Api\QueueController@getQueueForPetugas');
+  Route::get('queue/petugas', 'Api\QueueController@getQueueForEmployee');
+  Route::get('queue/petugas/{petugasId}', 'Api\QueueController@getCurrentQueueOfAnEmployee');
   Route::post('queue/petugas/next/{layananId}', 'Api\QueueController@takeLatestQueueFromAService');
   Route::post('queue/petugas/skip/{layananId}', 'Api\QueueController@skipLatestQueueFromAService');
+  Route::post('queue/kepuasan', 'Api\QueueController@updateKepuasanOfQueue');
 
   Route::get('employee', 'Api\EmployeeController@getEmployee');
   Route::post('employee', 'Api\EmployeeController@addEmployee');
