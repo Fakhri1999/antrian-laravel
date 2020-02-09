@@ -19,13 +19,16 @@ class ServiceController extends Controller
     if ($request->auth != env('API_KEY')) {
       return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
     }
-    $insert = [
-      'nama_layanan' => $request->nama
-    ];
-    $isNameUnique = DB::table('layanan')->where('nama_layanan', $insert['nama_layanan'])->first() == null;
+    $namaLayanan = $request->nama;
+    $isNameUnique = DB::table('layanan')->where('nama_layanan', $namaLayanan)->first() == null;
     if (!$isNameUnique) {
       return response()->json(['status' => 'error', 'message' => 'Name already in use'], 400);
     }
+    $services = DB::table('layanan')->get();
+    $insert = [
+      'nama_layanan' => $request->nama,
+      'urutan' => ++$services[sizeof($services) - 1]->urutan
+    ];
     $result = DB::table('layanan')->insert($insert);
     if ($result) {
       return response()->json(['status' => 'success', 'message' => 'Service succesfully added'], 201);

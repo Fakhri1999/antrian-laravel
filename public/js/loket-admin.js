@@ -109,39 +109,41 @@ $(document).ready(function() {
       confirmButtonText: "Ya, keluarkan!",
       cancelButtonText: "Tidak"
     }).then(result => {
-      $.ajax({
-        url: `${baseUrl}api/v1/counter/reset`,
-        type: "POST",
-        data: {
-          auth: API_KEY,
-          id: dataLoket[nomer].id
-        },
-        beforeSend: () => {
-          Swal.fire({
-            title: "Proses",
-            text: "Harap tunggu",
-            showConfirmButton: false,
-            allowOutsideClick: false
-          });
-        },
-        success: async (res, status, xhr) => {
-          if (xhr.status == 200) {
+      if (result.value) {
+        $.ajax({
+          url: `${baseUrl}api/v1/counter/reset`,
+          type: "POST",
+          data: {
+            auth: API_KEY,
+            id: dataLoket[nomer].id
+          },
+          beforeSend: () => {
             Swal.fire({
-              icon: "success",
-              title: "Sukses",
-              text: "Loket berhasil dikeluarkan"
+              title: "Proses",
+              text: "Harap tunggu",
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+          },
+          success: async (res, status, xhr) => {
+            if (xhr.status == 200) {
+              Swal.fire({
+                icon: "success",
+                title: "Sukses",
+                text: "Loket berhasil dikeluarkan"
+              });
+            }
+            refreshLoket();
+          },
+          error: async res => {
+            Swal.fire({
+              icon: "error",
+              title: "ERROR",
+              text: "Loket tidak ditemukan!"
             });
           }
-          refreshLoket();
-        },
-        error: async res => {
-          Swal.fire({
-            icon: "error",
-            title: "ERROR",
-            text: "Loket tidak ditemukan!"
-          });
-        }
-      });
+        });
+      }
     });
   });
   $(".rowLoket").on("click", ".hapusLoket", function() {
@@ -156,39 +158,41 @@ $(document).ready(function() {
       confirmButtonText: "Ya, hapus!",
       cancelButtonText: "Tidak"
     }).then(result => {
-      $.ajax({
-        url: `${baseUrl}api/v1/counter`,
-        type: "DELETE",
-        data: {
-          auth: API_KEY,
-          id: dataLoket[nomer].id
-        },
-        beforeSend: () => {
-          Swal.fire({
-            title: "Proses",
-            text: "Harap tunggu",
-            showConfirmButton: false,
-            allowOutsideClick: false
-          });
-        },
-        success: async (res, status, xhr) => {
-          if (xhr.status == 204) {
+      if (result.value) {
+        $.ajax({
+          url: `${baseUrl}api/v1/counter`,
+          type: "DELETE",
+          data: {
+            auth: API_KEY,
+            id: dataLoket[nomer].id
+          },
+          beforeSend: () => {
             Swal.fire({
-              icon: "success",
-              title: "Sukses",
-              text: "Loket berhasil dihapus"
+              title: "Proses",
+              text: "Harap tunggu",
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+          },
+          success: async (res, status, xhr) => {
+            if (xhr.status == 204) {
+              Swal.fire({
+                icon: "success",
+                title: "Sukses",
+                text: "Loket berhasil dihapus"
+              });
+            }
+            refreshLoket();
+          },
+          error: async res => {
+            Swal.fire({
+              icon: "error",
+              title: "ERROR",
+              text: "Loket tidak ditemukan!"
             });
           }
-          refreshLoket();
-        },
-        error: async res => {
-          Swal.fire({
-            icon: "error",
-            title: "ERROR",
-            text: "Loket tidak ditemukan!"
-          });
-        }
-      });
+        });
+      }
     });
   });
 });

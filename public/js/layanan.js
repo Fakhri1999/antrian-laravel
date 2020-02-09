@@ -38,8 +38,8 @@ $(document).ready(function() {
           });
         }
         $("#addServiceModal").modal("hide");
-        $("#layananNameAdd").val("");
         refreshLayanan();
+        $("#layananNamaAdd").val("")
       },
       error: async res => {
         console.log(res.responseText);

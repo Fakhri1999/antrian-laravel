@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-  return view('home', ['API_KEY' => env("API_KEY"), 'type' => ['A', 'B', 'C', 'D', 'E', 'F']]);
-});
+Route::get('/', 'HomeController@showHome');
 
 Route::get('admin/login', 'AdminController@showLogin');
 Route::post('admin/login', 'AdminController@login');
@@ -29,9 +27,10 @@ Route::get('petugas/login', 'PetugasController@showLogin');
 Route::post('petugas/login', 'PetugasController@login');
 Route::group(['prefix' => 'petugas', 'middleware' => ['isPetugasLoggedIn']], function () {
   Route::get('/', 'PetugasController@index');
-  Route::get('/loket', 'PetugasController@allLoket');
+  Route::get('/loket', 'PetugasController@allCounter');
   Route::get('/loket/keluar', 'PetugasController@exitCounter');
-  Route::get('/loket/{id}', 'PetugasController@ambilLoket');
+  Route::get('/loket/{id}', 'PetugasController@counter');
+  Route::get('/loket/ambil/{id}', 'PetugasController@takeCounter');
   Route::get('/logout', 'PetugasController@logout');
 });
 

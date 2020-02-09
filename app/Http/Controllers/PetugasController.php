@@ -43,7 +43,7 @@ class PetugasController extends Controller
     return redirect('petugas/loket');
   }
 
-  public function allLoket()
+  public function allCounter()
   {
     $petugasMasuk = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
     if ($petugasMasuk != null) {
@@ -59,31 +59,37 @@ class PetugasController extends Controller
     return redirect('petugas/login');
   }
 
-  public function ambilLoket($id)
+  public function takeCounter($id)
   {
-    if (session('petugas_masuk')) {
-      if ($id != session('nomor_loket')) {
-        return redirect("petugas/loket/" . session('nomor_loket'));
-      } else {
-        return view('loket/loket');
-      }
-    }
     $result = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
     if ($result != null) {
       session(['petugas_masuk' => true, 'nomor_loket' => $result->id]);
       return view('loket/loket');
     }
-    $update = [
+    $updateLoket = [
       'id_petugas' => session('petugas_id'),
       'status' => '1'
     ];
-    $resultUpdate = DB::table('loket')->where('id', $id)->update($update);
-    if ($resultUpdate) {
+    $updatePetugas = [
+      'status' => '1'
+    ];
+    $resultUpdateLoket = DB::table('loket')->where('id', $id)->update($updateLoket);
+    $resultUpdatePetugas = DB::table('petugas')->where('id', session('petugas_id'))->update($updatePetugas);
+    if ($resultUpdateLoket && $resultUpdatePetugas) {
       session(['petugas_masuk' => true, 'nomor_loket' => $id]);
-      return view('loket/loket');
+      return redirect("petugas/loket/$id");
     } else {
       echo "Error saat proses pengambilan loket. Silahkan menghubungi pihak IT";
     }
+  }
+
+  public function counter()
+  {
+    $result = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
+    if ($result == null) {
+      return redirect('petugas/loket');
+    }
+    return view('loket/loket');
   }
 
   public function exitCounter()

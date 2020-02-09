@@ -12,10 +12,14 @@
 <body>
   <input type="hidden" id="API_KEY" value="{{$API_KEY}}">
 
-  <div class="container">
+  <div class="container mt-2">
     <div class="row justify-content-center">
-      @for ($i = 1; $i <= 6; $i++) <div class="col-lg-2">
-        <a href="javascrip:void" class="btn btn-primary add-queue" data-type="{{$type[$i - 1]}}">Antrian {{$i}}</a>
+      @for ($i = 0; $i < sizeof($layanan); $i++) <div class="col-lg-2">
+        <button class="btn btn-primary add-queue btn-block d-flex align-items-center mt-2"
+          style="height:100px" data-urutan_layanan="{{$layanan[$i]->urutan}}" data-id_layanan="{{$layanan[$i]->id}}"
+          {{$layanan[$i]->status == "0" ? "disabled" : ""}}>
+          <span>Antrian <b>{{$layanan[$i]->nama_layanan}}</b></span>
+        </button>
     </div>
     @endfor
   </div>
@@ -24,7 +28,7 @@
   <script src="{{asset('js/popper.min.js')}}"></script>
   <script src="{{asset('js/bootstrap.min.js')}}"></script>
   <script src="{{asset('js/sweetalert2@9.js')}}"></script>
-  <script src="{{asset('js/script.js')}}"></script>
+  <script src="{{asset('js/home.js')}}"></script>
 </body>
 
 </html>

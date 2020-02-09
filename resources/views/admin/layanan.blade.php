@@ -7,7 +7,8 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <a href="#" class="mb-0 btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addServiceModal">
-      <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Layanan</a>
+      <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Layanan
+    </a>
   </div>
   <div class="card shadow mb-4">
     <div class="card-header py-3">

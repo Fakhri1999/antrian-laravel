@@ -47,7 +47,7 @@ $(document).ready(function() {
       }
     });
   });
-  $('#keluar').on('click', function(){
+  $("#keluar").on("click", function() {
     Swal.fire({
       title: `Keluar loket`,
       icon: "warning",
@@ -58,10 +58,25 @@ $(document).ready(function() {
       cancelButtonText: "Tidak"
     }).then(result => {
       if (result.value) {
-        window.location.href = `${baseUrl}petugas/loket/keluar`
+        window.location.href = `${baseUrl}petugas/loket/keluar`;
       }
     });
-  })
+  });
+  // Pusher.logToConsole = true;
+
+  // window.Echo = new Echo({
+  //   broadcaster: "pusher",
+  //   key: "37ebe4c45a5eb5f08639",
+  //   cluster: "ap1",
+  //   encrypted: true,
+  //   logToConsole: true
+  // });
+
+  Echo.channel("queueUpdated").listen("QueueUpdated", e => {
+    if(e.message == "New queue. Please update yours"){
+      refreshAntrian();
+    }
+  });
 });
 
 function nextAntrian(layananId) {

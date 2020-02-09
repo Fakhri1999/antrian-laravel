@@ -9,12 +9,14 @@ const baseUrl =
 const API_KEY = $("#API_KEY").val();
 $(document).ready(function() {
   $(".add-queue").on("click", function() {
-    let type = $(this).data("type");
+    let urutan_layanan = $(this).data("urutan_layanan");
+    let id_layanan = $(this).data("id_layanan");
     $.ajax({
       url: `${baseUrl}api/v1/queue`,
       type: "POST",
       data: {
-        type,
+        urutan_layanan,
+        id_layanan,
         auth: API_KEY
       },
       beforeSend: () => {
