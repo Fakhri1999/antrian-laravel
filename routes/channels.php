@@ -18,3 +18,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('queueUpdated', function () {
   return "Queue updated";
 });
+
+Broadcast::channel('loket.{nomorLoket}', function ($loket, $nomorLoket) {
+  return $loket;
+});

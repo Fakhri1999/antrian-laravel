@@ -75,6 +75,7 @@ function nextAntrian(layananId) {
     url: `${baseUrl}api/v1/queue/petugas/next/${layananId}`,
     type: "POST",
     data: {
+      nomor_loket : $("#nomor-loket").val(),
       id_petugas: $("#petugas-id").val()
     },
     beforeSend: () => {
@@ -112,6 +113,7 @@ function skipAntrian(layananId) {
     url: `${baseUrl}api/v1/queue/petugas/skip/${layananId}`,
     type: "POST",
     data: {
+      nomor_loket : $("#nomor-loket").val(),
       id_petugas: $("#petugas-id").val(),
       id_antrian: $("#current-antrian-id").val()
     },
@@ -153,13 +155,16 @@ function refreshAntrian() {
       $("#loader").show();
     },
     success: async (res, status, xhr) => {
-      let petugasId = $("petugas-id").val();
+      let petugasId = $("#petugas-id").val();
       $("#list-antrian").html("");
+      $("#current-antrian").html("-")
       let service = await $.ajax(`${baseUrl}api/v1/service`);
       let currentAntrian = await $.ajax(
         `${baseUrl}api/v1/queue/petugas/${petugasId}`
       );
-      $("#current-antrian").html(currentAntrian.message[0].nomor_antrian)
+      if(currentAntrian.message.length > 0){
+        $("#current-antrian").html(currentAntrian.message[0].nomor_antrian)
+      }
       for (let i = 0; i < service.message.length; i++) {
         for (let j = 0; j < res.message.length; j++) {
           if (res.message[j].id_layanan == service.message[i].id) {

@@ -63,8 +63,8 @@ class PetugasController extends Controller
   {
     $result = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
     if ($result != null) {
-      session(['petugas_masuk' => true, 'nomor_loket' => $result->id]);
-      return redirect("petugas/loket/$result->id");
+      session(['petugas_masuk' => true, 'nomor_loket' => $result->urutan]);
+      return redirect("petugas/loket/$result->urutan");
     }
     $updateLoket = [
       'id_petugas' => session('petugas_id'),
@@ -83,11 +83,14 @@ class PetugasController extends Controller
     }
   }
 
-  public function counter()
+  public function counter($id)
   {
     $result = DB::table('loket')->where('id_petugas', session('petugas_id'))->first();
     if ($result == null) {
       return redirect('petugas/loket');
+    }
+    if($result->urutan != $id){
+      return redirect("petugas/loket/$result->urutan");
     }
     return view('loket/loket');
   }

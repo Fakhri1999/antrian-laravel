@@ -43,13 +43,16 @@ class CounterController extends Controller
     if ($request->auth != env('API_KEY')) {
       return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
     }
-    $insert = [
-      'nomor_loket' => $request->nama
-    ];
-    $isNameUnique = DB::table('loket')->where('nomor_loket', $insert['nomor_loket'])->first() == null;
+    $namaLoket = $request->nama;
+    $isNameUnique = DB::table('loket')->where('nomor_loket', $namaLoket)->first() == null;
     if (!$isNameUnique) {
       return response()->json(['status' => 'success', 'message' => 'Counter name already in use'], 400);
     }
+    $counters = DB::table('loket')->get();
+    $insert = [
+      'nomor_loket' => $namaLoket,
+      'urutan' => ++$counters[sizeof($counters) - 1]->urutan
+    ];
     $result = DB::table('loket')->insert($insert);
     if ($result) {
       return response()->json(['status' => 'success', 'message' => 'Counter succesfully added'], 201);

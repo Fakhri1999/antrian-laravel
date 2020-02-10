@@ -13,6 +13,14 @@ $(document).ready(function() {
     let kepuasan = $(this).data("kepuasan");
     updateKepuasan(kepuasan);
   });
+  let nomorLoket = $("#nomor_loket").val();
+  console.log(nomorLoket);
+  Echo.channel(`loket.${nomorLoket}`).listen("LoketQueueUpdated", e => {
+    console.log(e.loket)
+    if (e.loket.message == "New queue. Please update yours") {
+      getCurrentQueue();
+    }
+  });
 });
 
 function getCurrentQueue() {
@@ -20,8 +28,11 @@ function getCurrentQueue() {
   $.ajax({
     url: `${baseUrl}api/v1/queue/petugas/${petugasId}`,
     type: "GET",
+    beforeSend: () => {
+      $("#loader").show();
+    },
     success: async (res, status, xhr) => {
-      console.log(res);
+      console.log(res.message);
       if (xhr.status == 200 && res.message.length > 0) {
         $(".rowKepuasan").show();
         $("#nomorAntrian").html(res.message[0].nomor_antrian);
@@ -29,14 +40,13 @@ function getCurrentQueue() {
       } else {
         $(".rowKepuasan").hide();
       }
+      $("#loader").hide();
     }
   });
 }
 
 function updateKepuasan(kepuasan) {
   let antrianId = $("#antrian_id").val();
-  console.log(kepuasan);
-  return;
   $.ajax({
     url: `${baseUrl}api/v1/queue/kepuasan`,
     type: "POST",

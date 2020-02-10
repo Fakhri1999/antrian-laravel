@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Events\QueueUpdated;
+use App\Events\LoketQueueUpdated;
 
 class QueueController extends Controller
 {
@@ -74,10 +75,8 @@ class QueueController extends Controller
     $dateNow = date("d-m-Y");
     $result = DB::table('antrian AS a')
       ->select(DB::raw('a.id, a.id_layanan'))
-      // ->rightJoin('layanan AS l', 'l.id', 'a.id_layanan')
       ->where('a.status', '1')
       ->where('a.tanggal_pembuatan', $dateNow)
-      // ->groupBy('a.id_layanan')
       ->get();
     if (sizeof($result) == 0) {
       return response()->json(['status' => 'success', 'message' => "Queue is empty"], 200);
@@ -90,6 +89,7 @@ class QueueController extends Controller
   {
     date_default_timezone_set('Asia/Jakarta');
     $petugasId = $request->id_petugas;
+    $nomorLoket = $request->nomor_loket;
     $dateNow = date("d-m-Y");
     $result = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->where('status', '1')->where('id_layanan', $layananId)->orderBy('jam_pembuatan', 'asc')->get();
     if (sizeof($result) == 0) {
@@ -97,6 +97,7 @@ class QueueController extends Controller
     }
     DB::table('antrian')->where('id', $result[0]->id)->update(['id_petugas' => $petugasId, 'status' => '10']);
     event(new QueueUpdated("New queue. Please update yours"));
+    event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));
     return response()->json(['status' => 'success', 'message' => $result[0]], 200);
   }
 
@@ -105,6 +106,7 @@ class QueueController extends Controller
     date_default_timezone_set('Asia/Jakarta');
     $petugasId = $request->id_petugas;
     $currentId = $request->id_antrian;
+    $nomorLoket = $request->nomor_loket;
     $dateNow = date("d-m-Y");
     DB::table('antrian')->where('id', $currentId)->update(['id_petugas' => $petugasId, 'status' => '9']);
     $result = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->where('status', '1')->where('id_layanan', $layananId)->orderBy('jam_pembuatan', 'asc')->get();
@@ -113,6 +115,7 @@ class QueueController extends Controller
     }
     DB::table('antrian')->where('id', $result[0]->id)->update(['id_petugas' => $petugasId, 'status' => '10']);
     event(new QueueUpdated("New queue. Please update yours"));
+    event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));
     return response()->json(['status' => 'success', 'message' => $result[0]], 200);
   }
 
