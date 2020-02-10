@@ -73,11 +73,11 @@ class QueueController extends Controller
     date_default_timezone_set('Asia/Jakarta');
     $dateNow = date("d-m-Y");
     $result = DB::table('antrian AS a')
-      ->select(DB::raw('a.id_layanan, l.nama_layanan, count(*) as jumlah'))
-      ->join('layanan AS l', 'l.id', 'a.id_layanan')
+      ->select(DB::raw('a.id, a.id_layanan'))
+      // ->rightJoin('layanan AS l', 'l.id', 'a.id_layanan')
       ->where('a.status', '1')
       ->where('a.tanggal_pembuatan', $dateNow)
-      ->groupBy('a.id_layanan')
+      // ->groupBy('a.id_layanan')
       ->get();
     if (sizeof($result) == 0) {
       return response()->json(['status' => 'success', 'message' => "Queue is empty"], 200);

@@ -62,18 +62,9 @@ $(document).ready(function() {
       }
     });
   });
-  // Pusher.logToConsole = true;
-
-  // window.Echo = new Echo({
-  //   broadcaster: "pusher",
-  //   key: "37ebe4c45a5eb5f08639",
-  //   cluster: "ap1",
-  //   encrypted: true,
-  //   logToConsole: true
-  // });
 
   Echo.channel("queueUpdated").listen("QueueUpdated", e => {
-    if(e.message == "New queue. Please update yours"){
+    if (e.message == "New queue. Please update yours") {
       refreshAntrian();
     }
   });
@@ -158,23 +149,41 @@ function refreshAntrian() {
   $.ajax({
     url: `${baseUrl}api/v1/queue/petugas`,
     type: "GET",
+    beforeSend: () => {
+      $("#loader").show();
+    },
     success: async (res, status, xhr) => {
-      console.log(res);
+      let petugasId = $("petugas-id").val();
       $("#list-antrian").html("");
-      if (res.message == "Queue is empty") {
-        $("#recall-btn").prop("disabled", true);
-        $("#list-antrian").append(
-          `<option disabled selected>ANTRIAN KOSONG</option>`
-        );
-      } else {
-        $("#recall-btn").prop("disabled", false);
-        $("#list-antrian").html("");
-        res.message.forEach(e => {
-          $("#list-antrian").append(
-            `<option value="${e.id_layanan}">${e.nama_layanan} (${e.jumlah})</option>`
-          );
-        });
+      let service = await $.ajax(`${baseUrl}api/v1/service`);
+      let currentAntrian = await $.ajax(
+        `${baseUrl}api/v1/queue/petugas/${petugasId}`
+      );
+      $("#current-antrian").html(currentAntrian.message[0].nomor_antrian)
+      for (let i = 0; i < service.message.length; i++) {
+        for (let j = 0; j < res.message.length; j++) {
+          if (res.message[j].id_layanan == service.message[i].id) {
+            service.message[i].jumlah++;
+          }
+        }
       }
+      console.log(service.message);
+      service.message.forEach(e => {
+        if (e.jumlah == 0) {
+          $("#list-antrian").append(
+            `<option value="${e.id}">${e.nama_layanan} (ANTRIAN KOSONG)</option>`
+          );
+        } else {
+          $("#list-antrian").append(
+            `<option value="${e.id}">${e.nama_layanan} (${e.jumlah})</option>`
+          );
+        }
+      });
+      $("#current-antrian").html() == "-"
+        ? $("#recall-btn").prop("disabled", true)
+        : $("#recall-btn").prop("disabled", false);
+
+      $("#loader").hide();
     },
     error: async res => {
       console.log(res.responseText);

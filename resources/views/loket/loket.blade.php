@@ -3,17 +3,26 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-  <input type="hidden" id="petugas-id" value="{{session('petugas_id')}}">
-  <!-- Page Heading -->
-  <input type="hidden" id="current-antrian-id">
-  <h1 class="text-center"><b>LOKET {{session('nomor_loket')}}</b></h1>
-  <button id="keluar" class="btn btn-danger"><b>KELUAR</b></button>
-  <h1>HALO <b>{{strtoupper(session('petugas_name'))}}</b></h1>
-  <h2>NO ANTRIAN SEKARANG<br><b><span id="current-antrian">-</span></b></h2>
-  <button class="btn btn-warning text-dark" id="recall-btn"><b>RECALL</b></button>
-  <select class="form-control mb-2 mt-2" id="list-antrian">
-  </select>
-  <button id="skip" class="btn btn-success"><b>SKIP</b></button> <button id="next" class="btn btn-primary"><b>NEXT</b></button>
+  <div class="row">
+    <div class="col-12">
+
+      <div id="loader">
+      </div>
+      <input type="hidden" id="petugas-id" value="{{session('petugas_id')}}">
+      <!-- Page Heading -->
+      <input type="hidden" id="current-antrian-id">
+      <h1 class="text-center"><b>LOKET {{session('nomor_loket')}}</b></h1>
+      <button id="keluar" class="btn btn-danger"><b>KELUAR</b></button>
+      <h1>HALO <b>{{strtoupper(session('petugas_name'))}}</b></h1>
+      <h2>NO ANTRIAN SEKARANG<br><b><span id="current-antrian">-</span></b></h2>
+      <button class="btn btn-warning text-dark" id="recall-btn"><b>RECALL</b></button>
+      <select class="form-control mb-2 mt-2" id="list-antrian">
+      </select>
+      <button id="skip" class="btn btn-success"><b>SKIP</b></button> <button id="next"
+        class="btn btn-primary"><b>NEXT</b>
+      </button>
+    </div>
+  </div>
 </div>
 <!-- /.container-fluid -->
 </div>
