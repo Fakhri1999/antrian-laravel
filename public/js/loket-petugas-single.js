@@ -62,7 +62,9 @@ $(document).ready(function() {
       }
     });
   });
-
+  $("#recall-btn").on("click", function() {
+    recall();
+  });
   Echo.channel("queueUpdated").listen("QueueUpdated", e => {
     if (e.message == "New queue. Please update yours") {
       refreshAntrian();
@@ -75,7 +77,7 @@ function nextAntrian(layananId) {
     url: `${baseUrl}api/v1/queue/petugas/next/${layananId}`,
     type: "POST",
     data: {
-      nomor_loket : $("#nomor-loket").val(),
+      nomor_loket: $("#nomor-loket").val(),
       id_petugas: $("#petugas-id").val()
     },
     beforeSend: () => {
@@ -113,7 +115,7 @@ function skipAntrian(layananId) {
     url: `${baseUrl}api/v1/queue/petugas/skip/${layananId}`,
     type: "POST",
     data: {
-      nomor_loket : $("#nomor-loket").val(),
+      nomor_loket: $("#nomor-loket").val(),
       id_petugas: $("#petugas-id").val(),
       id_antrian: $("#current-antrian-id").val()
     },
@@ -128,6 +130,8 @@ function skipAntrian(layananId) {
     success: async (res, status, xhr) => {
       if (xhr.status == 200) {
         if (res.message == "Queue for this service is empty") {
+          $("#current-antrian").html("-");
+          $("#current-antrian-id").val(0);
           Swal.fire({
             icon: "error",
             title: "Maaf",
@@ -157,13 +161,13 @@ function refreshAntrian() {
     success: async (res, status, xhr) => {
       let petugasId = $("#petugas-id").val();
       $("#list-antrian").html("");
-      $("#current-antrian").html("-")
+      $("#current-antrian").html("-");
       let service = await $.ajax(`${baseUrl}api/v1/service`);
       let currentAntrian = await $.ajax(
         `${baseUrl}api/v1/queue/petugas/${petugasId}`
       );
-      if(currentAntrian.message.length > 0){
-        $("#current-antrian").html(currentAntrian.message[0].nomor_antrian)
+      if (currentAntrian.message != null) {
+        $("#current-antrian").html(currentAntrian.message.nomor_antrian);
       }
       for (let i = 0; i < service.message.length; i++) {
         for (let j = 0; j < res.message.length; j++) {
@@ -187,11 +191,29 @@ function refreshAntrian() {
       $("#current-antrian").html() == "-"
         ? $("#recall-btn").prop("disabled", true)
         : $("#recall-btn").prop("disabled", false);
+      $("#current-antrian").html() == "-"
+        ? $("#skip").prop("disabled", true)
+        : $("#skip").prop("disabled", false);
 
       $("#loader").hide();
     },
     error: async res => {
       console.log(res.responseText);
     }
+  });
+}
+
+function recall() {
+  $.ajax({
+    url: `${baseUrl}api/v1/queue/recall`,
+    type: "POST",
+    data: {
+      id_petugas: $("#petugas-id").val()
+    },
+    success: async (res, status, xhr) => {Swal.fire({
+      icon: "success",
+      title: "Berhasil",
+      text: "Antrian berhasil dipanggil ulang!"
+    });}
   });
 }

@@ -19,6 +19,10 @@ Broadcast::channel('queueUpdated', function () {
   return "Queue updated";
 });
 
+Broadcast::channel('display', function ($queue) {
+  return $queue;
+});
+
 Broadcast::channel('loket.{nomorLoket}', function ($loket, $nomorLoket) {
   return $loket;
 });

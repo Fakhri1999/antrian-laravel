@@ -95,4 +95,10 @@ class CounterController extends Controller
       return response()->json(['status' => 'error', 'message' => 'Counter not found'], 404);
     }
   }
+
+  public function getActiveCounter()
+  {
+    $result = DB::table('loket AS l')->join('antrian AS a', 'a.id', 'l.id_antrian')->where('l.status', '1')->get();
+    return response()->json(['status' => 'success', 'message' => $result], 200);
+  }
 }

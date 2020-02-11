@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Events\QueueUpdated;
 use App\Events\LoketQueueUpdated;
+use App\Events\DisplayQueueUpdated;
 
 class QueueController extends Controller
 {
@@ -93,11 +94,19 @@ class QueueController extends Controller
     $dateNow = date("d-m-Y");
     $result = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->where('status', '1')->where('id_layanan', $layananId)->orderBy('jam_pembuatan', 'asc')->get();
     if (sizeof($result) == 0) {
+      event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));
       return response()->json(['status' => 'success', 'message' => 'Queue for this service is empty'], 200);
     }
     DB::table('antrian')->where('id', $result[0]->id)->update(['id_petugas' => $petugasId, 'status' => '10']);
+    DB::table('loket')->where('id_petugas', $petugasId)->update(['id_antrian' => $result[0]->id]);
     event(new QueueUpdated("New queue. Please update yours"));
     event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));
+    $queue = DB::table('loket AS l')
+      ->join('antrian AS a', 'a.id', 'l.id_antrian')
+      ->where('l.id_petugas', $petugasId)
+      ->where('a.kepuasan', '=', 'TIDAK MENGISI')
+      ->first();
+    event(new DisplayQueueUpdated(["antrian" => $queue, "message" => "New queue. Please update yours"]));
     return response()->json(['status' => 'success', 'message' => $result[0]], 200);
   }
 
@@ -111,24 +120,31 @@ class QueueController extends Controller
     DB::table('antrian')->where('id', $currentId)->update(['id_petugas' => $petugasId, 'status' => '9']);
     $result = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->where('status', '1')->where('id_layanan', $layananId)->orderBy('jam_pembuatan', 'asc')->get();
     if (sizeof($result) == 0) {
+      DB::table('loket')->where('id_petugas', $petugasId)->update(['id_antrian' => '0']);
+      event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));
       return response()->json(['status' => 'success', 'message' => 'Queue for this service is empty'], 200);
     }
     DB::table('antrian')->where('id', $result[0]->id)->update(['id_petugas' => $petugasId, 'status' => '10']);
+    DB::table('loket')->where('id_petugas', $petugasId)->update(['id_antrian' => $result[0]->id]);
     event(new QueueUpdated("New queue. Please update yours"));
     event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));
+    $queue = DB::table('loket AS l')
+      ->join('antrian AS a', 'a.id', 'l.id_antrian')
+      ->where('l.id_petugas', $petugasId)
+      ->where('a.kepuasan', '=', 'TIDAK MENGISI')
+      ->first();
+    event(new DisplayQueueUpdated(["antrian" => $queue, "message" => "New queue. Please update yours"]));
     return response()->json(['status' => 'success', 'message' => $result[0]], 200);
   }
 
-  public function getCurrentQueueOfAnEmployee(Request $request, $petugasId)
+  public function getCurrentQueueInALoket(Request $request, $petugasId)
   {
     date_default_timezone_set('Asia/Jakarta');
-    $result = DB::table('antrian')
-      ->where('tanggal_pembuatan', date("d-m-Y"))
-      ->where('id_petugas', $petugasId)
-      ->where('kepuasan', 'TIDAK MENGISI')
-      ->orderBy('jam_pembuatan', 'desc')
-      ->limit(1)
-      ->get();
+    $result = DB::table('loket AS l')
+      ->join('antrian AS a', 'a.id', 'l.id_antrian')
+      ->where('l.id_petugas', $petugasId)
+      ->where('a.kepuasan', '=', 'TIDAK MENGISI')
+      ->first();
     return response()->json(['status' => 'success', 'message' => $result], 200);
   }
 
@@ -141,7 +157,18 @@ class QueueController extends Controller
     $update = [
       'kepuasan' => $request->kepuasan
     ];
-    return response()->json(['status' => 'success', 'message' => $update], 200);
     DB::table('antrian')->where('id', $antrianId)->update($update);
+    return response()->json(['status' => 'success', 'message' => $update], 200);
+  }
+  public function recall(Request $request)
+  {
+    $petugasId = $request->id_petugas;
+    date_default_timezone_set('Asia/Jakarta');
+    $result = DB::table('loket AS l')
+      ->join('antrian AS a', 'a.id', 'l.id_antrian')
+      ->where('l.id_petugas', $petugasId)
+      ->where('a.kepuasan', '=', 'TIDAK MENGISI')
+      ->first();
+    event(new DisplayQueueUpdated(["antrian" => $result, "message" => "New queue. Please update yours"]));
   }
 }

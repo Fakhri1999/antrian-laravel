@@ -20,10 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
   Route::post('queue', 'Api\QueueController@addQueue');
   Route::get('queue/petugas', 'Api\QueueController@getQueueForEmployee');
-  Route::get('queue/petugas/{petugasId}', 'Api\QueueController@getCurrentQueueOfAnEmployee');
+  Route::get('queue/petugas/{petugasId}', 'Api\QueueController@getCurrentQueueInALoket');
   Route::post('queue/petugas/next/{layananId}', 'Api\QueueController@takeLatestQueueFromAService');
   Route::post('queue/petugas/skip/{layananId}', 'Api\QueueController@skipLatestQueueFromAService');
   Route::post('queue/kepuasan', 'Api\QueueController@updateKepuasanOfQueue');
+  Route::post('queue/recall', 'Api\QueueController@recall');
 
   Route::get('employee', 'Api\EmployeeController@getEmployee');
   Route::post('employee', 'Api\EmployeeController@addEmployee');
@@ -41,4 +42,5 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
   Route::delete('counter', 'Api\CounterController@deleteCounter');
   Route::post('counter/reset/all', 'Api\CounterController@resetAllCounter');
   Route::post('counter/reset', 'Api\CounterController@resetSingleCounter');
+  Route::get('counter/active', 'Api\CounterController@getActiveCounter');
 });

@@ -33,11 +33,12 @@ function getCurrentQueue() {
     },
     success: async (res, status, xhr) => {
       console.log(res.message);
-      if (xhr.status == 200 && res.message.length > 0) {
+      if (xhr.status == 200 && res.message != null) {
         $(".rowKepuasan").show();
-        $("#nomorAntrian").html(res.message[0].nomor_antrian);
-        $("#antrian_id").val(res.message[0].id);
+        $("#nomorAntrian").html(res.message.nomor_antrian);
+        $("#antrian_id").val(res.message.id);
       } else {
+        $("#nomorAntrian").html("-");
         $(".rowKepuasan").hide();
       }
       $("#loader").hide();
@@ -47,6 +48,9 @@ function getCurrentQueue() {
 
 function updateKepuasan(kepuasan) {
   let antrianId = $("#antrian_id").val();
+  // console.log(kepuasan)
+  // console.log(antrianId)
+  // return
   $.ajax({
     url: `${baseUrl}api/v1/queue/kepuasan`,
     type: "POST",
