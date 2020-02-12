@@ -21,6 +21,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdminLoggedIn']], functio
   Route::get('/petugas', 'AdminController@showPetugas');
   Route::get('/layanan', 'AdminController@showLayanan');
   Route::get('/loket', 'AdminController@showLoket');
+  Route::get('/display', 'AdminController@showDisplayAdmin');
+  Route::post('/display', 'AdminController@updateDisplay');
 });
 
 Route::get('petugas/login', 'PetugasController@showLogin');

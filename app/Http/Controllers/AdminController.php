@@ -58,4 +58,19 @@ class AdminController extends Controller
   {
     return view('admin/loket', ['API_KEY' => env("API_KEY")]);
   }
+
+  public function showDisplayAdmin(){
+    $result = DB::table('display')->first();
+    return view('admin/display', ['API_KEY' => env("API_KEY"), 'data' => $result]);
+  }
+
+  public function updateDisplay(Request $request){
+    $this->validate($request, [
+      'nama-perusahaan' => 'required',
+      'alamat-perusahaan' => 'required',
+      'running-text' => 'required',
+      // 'logo-perusahaan' => 'required|mimes:jpg,jpeg,png',
+      // 'video-display' => 'required|mimes:mp4,mkv,mpg,webm,m4v,avi'
+    ]);
+  }
 }

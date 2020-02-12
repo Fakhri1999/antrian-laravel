@@ -72,6 +72,11 @@
           <span>Loket</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('admin/display')}}">
+          <span>Display</span>
+        </a>
+      </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
 
@@ -213,6 +218,10 @@
     <script src="{{asset('js/popper.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/sweetalert2@9.js')}}"></script>
+    <script src="{{asset('js/custom-file-input.js')}}"></script>
+    <script>
+      bsCustomFileInput.init()
+    </script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('admin-template/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
