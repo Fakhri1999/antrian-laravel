@@ -59,18 +59,44 @@ class AdminController extends Controller
     return view('admin/loket', ['API_KEY' => env("API_KEY")]);
   }
 
-  public function showDisplayAdmin(){
+  public function showDisplayAdmin()
+  {
     $result = DB::table('display')->first();
     return view('admin/display', ['API_KEY' => env("API_KEY"), 'data' => $result]);
   }
 
-  public function updateDisplay(Request $request){
+  public function updateDisplay(Request $request)
+  {
     $this->validate($request, [
-      'nama-perusahaan' => 'required',
-      'alamat-perusahaan' => 'required',
-      'running-text' => 'required',
-      // 'logo-perusahaan' => 'required|mimes:jpg,jpeg,png',
-      // 'video-display' => 'required|mimes:mp4,mkv,mpg,webm,m4v,avi'
+      'nama_perusahaan' => 'required',
+      'alamat_perusahaan' => 'required',
+      'running_text' => 'required',
+      'logo_perusahaan' => 'mimes:jpg,jpeg,png',
+      'video_display' => 'mimes:mp4,mkv,mpg,webm,m4v,avi'
     ]);
+    $logo = $request->file('logo_perusahaan');
+    $video = $request->file('video_display');
+    if ($logo != null) {
+      $logoFileName = "logo." . $logo->getClientOriginalExtension();
+      $logo->move(public_path('uploads/display'), $logoFileName);
+    }
+    if ($video != null) {
+      $videoFileName = "video." . $video->getClientOriginalExtension();
+      $video->move(public_path('uploads/display'), $videoFileName);
+    }
+    $update = [
+      'nama_perusahaan' => $request->nama_perusahaan,
+      'logo_perusahaan' => isset($logoFileName) ? $logoFileName : "",
+      'alamat_perusahaan' => $request->alamat_perusahaan,
+      'running_text' => $request->running_text,
+      'video_display' => isset($videoFileName) ? $videoFileName : "",
+    ];
+    $id = $request->id_display;
+    DB::table('display')->where('id', $id)->update($update);
+    return redirect('admin/display')->with('status', '<script>Swal.fire({
+      icon: "success",
+      title: "Sukses",
+      text: "Data display berhasil diubah"
+    });</script>');;
   }
 }

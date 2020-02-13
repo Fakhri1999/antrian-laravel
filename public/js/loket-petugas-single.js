@@ -210,10 +210,12 @@ function recall() {
     data: {
       id_petugas: $("#petugas-id").val()
     },
-    success: async (res, status, xhr) => {Swal.fire({
-      icon: "success",
-      title: "Berhasil",
-      text: "Antrian berhasil dipanggil ulang!"
-    });}
+    success: async (res, status, xhr) => {
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Antrian berhasil dipanggil ulang!"
+      });
+    }
   });
 }
