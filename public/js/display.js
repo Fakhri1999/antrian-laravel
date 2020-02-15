@@ -20,38 +20,13 @@ $(document).ready(async function() {
       }
     }
     let queue = e.queue.antrian;
-    setTimeout(() => {
-      refreshLoket();
-      $("#nomor-antrian").html(queue.nomor_antrian);
-      $("#loket-antrian").html(queue.urutan);
-      var x = document.getElementById("in-sound");
-      x.muted = false;
-      x.play();
-      responsiveVoice.speak(
-        `Nomor Antrian ${queue.nomor_antrian} Harap ke Loket nomor ${queue.urutan}.`,
-        "Indonesian Female",
-        {
-          pitch: 1,
-          rate: 1,
-          volume: 1,
-          onstart: () => {
-            ada = true;
-          },
-          onend: () => {
-            ada = false;
-            time -= time == 0 ? 0 : 3000;
-          }
-        }
-      );
-    }, time);
     // setTimeout(() => {
+    //   refreshLoket();
+    //   $("#nomor-antrian").html(queue.nomor_antrian);
+    //   $("#loket-antrian").html(queue.urutan);
     //   var x = document.getElementById("in-sound");
     //   x.muted = false;
     //   x.play();
-    // }, time);
-    // time += await 2500;
-    // console.log(`time tengah : ${time}`);
-    // setTimeout(() => {
     //   responsiveVoice.speak(
     //     `Nomor Antrian ${queue.nomor_antrian} Harap ke Loket nomor ${queue.urutan}.`,
     //     "Indonesian Female",
@@ -64,12 +39,43 @@ $(document).ready(async function() {
     //       },
     //       onend: () => {
     //         ada = false;
-    //         time -= time == 2500 ? 2500 : 5500;
-    //         console.log(`time sesudah : ${time}`);
+    //         time -= time == 0 ? 0 : 3000;
     //       }
     //     }
     //   );
     // }, time);
+    setTimeout(() => {
+      refreshLoket();
+      $("#nomor-antrian").html(queue.nomor_antrian);
+      $("#loket-antrian").html(queue.urutan);
+      var x = document.getElementById("in-sound");
+      x.muted = false;
+      x.play();
+    }, time);
+    time += await 2500;
+    console.log(`time tengah : ${time}`);
+    setTimeout(() => {
+      responsiveVoice.speak(
+        `Nomor Antrian ${queue.nomor_antrian} Harap ke Loket nomor ${queue.urutan}.`,
+        "Indonesian Female",
+        {
+          pitch: 0.8,
+          rate: 0.9,
+          volume: 1,
+          onstart: () => {
+            ada = true;
+          },
+          onend: () => {
+            ada = false;
+            time -= time == 2500 ? 2500 : 5500;
+            console.log(`time sesudah : ${time}`);
+          }
+        }
+      );
+    }, time);
+    if (!ada && time < 0) {
+      time = 0;
+    }
   });
 });
 
@@ -121,8 +127,11 @@ function startTime() {
   hour = checkTime(hour);
   minute = checkTime(minute);
   second = checkTime(second);
-  let render = `${hour}:${minute}:${second} - ${today.toLocaleDateString("id-ID", options)}`;
-  $("#time").html(render)
+  let render = `${hour}:${minute}:${second} - ${today.toLocaleDateString(
+    "id-ID",
+    options
+  )}`;
+  $("#time").html(render);
   let t = setTimeout(startTime, 500);
 }
 function checkTime(i) {

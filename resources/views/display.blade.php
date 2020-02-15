@@ -98,6 +98,7 @@
   <script src="{{asset('js/sweetalert2@9.js')}}"></script>
   <script src="{{asset('js/app.js')}}"></script>
   <script src="{{asset('js/responsive-voice.js')}}"></script>
+  <script src="{{asset('js/jquery-bubble-popup-v3.min.js')}}"></script>
   <script src="{{asset('js/display.js')}}"></script>
 </body>
 

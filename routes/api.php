@@ -18,29 +18,29 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
-  Route::post('queue', 'Api\QueueController@addQueue');
-  Route::get('queue/petugas', 'Api\QueueController@getQueueForEmployee');
-  Route::get('queue/petugas/{petugasId}', 'Api\QueueController@getCurrentQueueInALoket');
-  Route::post('queue/petugas/next/{layananId}', 'Api\QueueController@takeLatestQueueFromAService');
-  Route::post('queue/petugas/skip/{layananId}', 'Api\QueueController@skipLatestQueueFromAService');
-  Route::post('queue/kepuasan', 'Api\QueueController@updateKepuasanOfQueue');
-  Route::post('queue/recall', 'Api\QueueController@recall');
+  Route::post('queue', 'API\QueueController@addQueue');
+  Route::get('queue/petugas', 'API\QueueController@getQueueForEmployee');
+  Route::get('queue/petugas/{petugasId}', 'API\QueueController@getCurrentQueueInALoket');
+  Route::post('queue/petugas/next/{layananId}', 'API\QueueController@takeLatestQueueFromAService');
+  Route::post('queue/petugas/skip/{layananId}', 'API\QueueController@skipLatestQueueFromAService');
+  Route::post('queue/kepuasan', 'API\QueueController@updateKepuasanOfQueue');
+  Route::post('queue/recall', 'API\QueueController@recall');
 
-  Route::get('employee', 'Api\EmployeeController@getEmployee');
-  Route::post('employee', 'Api\EmployeeController@addEmployee');
-  Route::put('employee', 'Api\EmployeeController@editEmployee');
-  Route::delete('employee', 'Api\EmployeeController@deleteEmployee');
+  Route::get('employee', 'API\EmployeeController@getEmployee');
+  Route::post('employee', 'API\EmployeeController@addEmployee');
+  Route::put('employee', 'API\EmployeeController@editEmployee');
+  Route::delete('employee', 'API\EmployeeController@deleteEmployee');
 
-  Route::get('service', 'Api\ServiceController@getService');
-  Route::post('service', 'Api\ServiceController@addService');
-  Route::put('service', 'Api\ServiceController@editService');
-  Route::delete('service', 'Api\ServiceController@deleteService');
-  Route::put('service/change-status', 'Api\ServiceController@changeStatusService');
+  Route::get('service', 'API\ServiceController@getService');
+  Route::post('service', 'API\ServiceController@addService');
+  Route::put('service', 'API\ServiceController@editService');
+  Route::delete('service', 'API\ServiceController@deleteService');
+  Route::put('service/change-status', 'API\ServiceController@changeStatusService');
 
-  Route::get('counter', 'Api\CounterController@getAllCounter');
-  Route::post('counter', 'Api\CounterController@addCounter');
-  Route::delete('counter', 'Api\CounterController@deleteCounter');
-  Route::post('counter/reset/all', 'Api\CounterController@resetAllCounter');
-  Route::post('counter/reset', 'Api\CounterController@resetSingleCounter');
-  Route::get('counter/active', 'Api\CounterController@getActiveCounter');
+  Route::get('counter', 'API\CounterController@getAllCounter');
+  Route::post('counter', 'API\CounterController@addCounter');
+  Route::delete('counter', 'API\CounterController@deleteCounter');
+  Route::post('counter/reset/all', 'API\CounterController@resetAllCounter');
+  Route::post('counter/reset', 'API\CounterController@resetSingleCounter');
+  Route::get('counter/active', 'API\CounterController@getActiveCounter');
 });
