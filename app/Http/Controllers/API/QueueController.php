@@ -24,7 +24,7 @@ class QueueController extends Controller
     $ada = false;
     $dbData = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->orderBy('id', 'desc')->get();
     if ($dbData == null) {
-      DB::table('antrian')->insert([
+      $insert = [
         'nomor_antrian' => $this->angkaLayananToHurufLayanan($urutanLayanan) . '001',
         'tanggal_pembuatan' => $dateNow,
         'jam_pembuatan' => $timeNow,
@@ -32,11 +32,12 @@ class QueueController extends Controller
         'kepuasan' => 'TIDAK MENGISI',
         'id_layanan' => $idLayanan,
         'id_petugas' => '0'
-      ]);
+      ];
+      DB::table('antrian')->insert($insert);
     } else {
       for ($i = 0; $i < sizeof($dbData); $i++) {
         if (substr($dbData[$i]->nomor_antrian, 0, 1) == $this->angkaLayananToHurufLayanan($urutanLayanan)) {
-          DB::table('antrian')->insert([
+          $insert = [
             'nomor_antrian' => ++$dbData[$i]->nomor_antrian,
             'tanggal_pembuatan' => $dateNow,
             'jam_pembuatan' => $timeNow,
@@ -44,13 +45,14 @@ class QueueController extends Controller
             'kepuasan' => 'TIDAK MENGISI',
             'id_layanan' => $idLayanan,
             'id_petugas' => '0'
-          ]);
+          ];
+          DB::table('antrian')->insert($insert);
           $ada = true;
           break;
         }
       }
       if (!$ada) {
-        DB::table('antrian')->insert([
+        $insert = [
           'nomor_antrian' => $this->angkaLayananToHurufLayanan($urutanLayanan) . '001',
           'tanggal_pembuatan' => $dateNow,
           'jam_pembuatan' => $timeNow,
@@ -58,11 +60,12 @@ class QueueController extends Controller
           'kepuasan' => 'TIDAK MENGISI',
           'id_layanan' => $idLayanan,
           'id_petugas' => '0'
-        ]);
+        ];
+        DB::table('antrian')->insert($insert);
       }
     }
     event(new QueueUpdated("New queue. Please update yours"));
-    return response()->json(['status' => 'success', 'message' => 'Queue succesfully added'], 201);
+    return response()->json(['status' => 'success', 'message' => 'Queue succesfully added', 'data' => $insert], 201);
   }
 
   private function angkaLayananToHurufLayanan($number)

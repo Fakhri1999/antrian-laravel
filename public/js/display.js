@@ -120,10 +120,6 @@ function startTime() {
   let hour = today.getHours();
   let minute = today.getMinutes();
   let second = today.getSeconds();
-  let day = today.getDay();
-  let date = today.getDate();
-  let month = today.getMonth();
-  let year = today.getFullYear();
   hour = checkTime(hour);
   minute = checkTime(minute);
   second = checkTime(second);

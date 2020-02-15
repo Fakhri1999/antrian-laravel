@@ -38,3 +38,6 @@ Route::group(['prefix' => 'petugas', 'middleware' => ['isPetugasLoggedIn']], fun
 });
 
 Route::get('/display', 'HomeController@showDisplay');
+Route::get('/print', function(){
+  return view('print');
+});
