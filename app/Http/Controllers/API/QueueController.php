@@ -121,7 +121,11 @@ class QueueController extends Controller
     $nomorLoket = $request->nomor_loket;
     $dateNow = date("d-m-Y");
     DB::table('antrian')->where('id', $currentId)->update(['id_petugas' => $petugasId, 'status' => '9']);
-    $result = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->where('status', '1')->where('id_layanan', $layananId)->orderBy('jam_pembuatan', 'asc')->get();
+    $result = DB::table('antrian')
+    ->where('tanggal_pembuatan', $dateNow)
+    ->where('status', '1')
+    ->where('id_layanan', $layananId)
+    ->orderBy('jam_pembuatan', 'asc')->get();
     if (sizeof($result) == 0) {
       DB::table('loket')->where('id_petugas', $petugasId)->update(['id_antrian' => '0']);
       event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));

@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdminLoggedIn']], functio
   Route::get('/loket', 'AdminController@showLoket');
   Route::get('/display', 'AdminController@showDisplayAdmin');
   Route::post('/display', 'AdminController@updateDisplay');
+  Route::get('/rekapan', 'AdminController@showRekapan');
 });
 
 Route::get('petugas/login', 'PetugasController@showLogin');

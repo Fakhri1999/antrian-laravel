@@ -100,4 +100,13 @@ class AdminController extends Controller
       text: "Data display berhasil diubah"
     });</script>');;
   }
+
+  public function showRekapan(){
+    $result = DB::table('antrian as a')
+    ->join('layanan as l', 'l.id', 'a.id_layanan')
+    ->where('a.id', '>', '0')
+    ->select('a.*', 'l.nama_layanan')
+    ->get();
+    return view('admin/rekapan/antrian', ['data' => $result]);
+  }
 }
