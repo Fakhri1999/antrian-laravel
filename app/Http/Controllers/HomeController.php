@@ -11,10 +11,12 @@ class HomeController extends Controller
   public function showHome()
   {
     $result = DB::table('layanan')->where('id', '>', '0')->get();
-    return view('home', ['API_KEY' => env("API_KEY"), 'layanan' => $result]);
+    $display = DB::table('display')->where('id', 1)->first();
+    return view('home', ['API_KEY' => env("API_KEY"), 'layanan' => $result, 'data' => $display]);
   }
 
   public function showDisplay(){
-    return view('display');
+    $result = DB::table('display')->where('id', 1)->first();
+    return view('display', ['data' => $result]);
   }
 }

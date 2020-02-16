@@ -8,7 +8,8 @@ const baseUrl =
     : `${protocol}//${hostname}/`;
 const API_KEY = $("#API_KEY").val();
 $(document).ready(async function() {
-  refreshLoket();
+  let check = await refreshLoket();
+
   let ada = false;
   let time = 0;
   Echo.channel(`display`).listen("DisplayQueueUpdated", async e => {
@@ -44,10 +45,8 @@ $(document).ready(async function() {
     //     }
     //   );
     // }, time);
+    refreshLoket();
     setTimeout(() => {
-      refreshLoket();
-      $("#nomor-antrian").html(queue.nomor_antrian);
-      $("#loket-antrian").html(queue.urutan);
       var x = document.getElementById("in-sound");
       x.muted = false;
       x.play();
@@ -69,13 +68,13 @@ $(document).ready(async function() {
             ada = false;
             time -= time == 2500 ? 2500 : 5500;
             console.log(`time sesudah : ${time}`);
+            if (time < 0) {
+              time = 0;
+            }
           }
         }
       );
     }, time);
-    if (!ada && time < 0) {
-      time = 0;
-    }
   });
 });
 
@@ -87,23 +86,36 @@ function refreshLoket() {
       $("#loader").show();
     },
     success: async (res, status, xhr) => {
+      console.log(res);
       let render = "";
       $(".rowLoket").html("");
       res.message.forEach(e => {
-        render += `<div class="col-4 mb-2">
-        <div class="card">
-        <div class="card-header header-card-loket">
+        render += `<div class="loket-row">
+        <h1 class="mb-0">
         ${e.nomor_loket.toUpperCase()}
-          </div>
-          <div class="card-body">
-          <blockquote class="blockquote mb-0 text-center">
-              <p>${e.nomor_antrian}</p>
-              </blockquote>
-          </div>
-          </div>
+        </h1>
+        <h2>
+        ${e.nomor_antrian}
+        </h2>
       </div>`;
       });
       $(".rowLoket").html(render);
+      $(".marquee-vert").marquee('destroy')
+      $(".marquee-horz").marquee('destroy')
+      $(".marquee-horz").marquee({
+        speed: 100,
+        gap: 50,
+        delayBeforeStart: 0,
+        direction: "left",
+        duplicated: true,
+        pauseOnHover: true
+      });
+      $(".marquee-vert").marquee({
+        direction: "up",
+        speed: 50,
+        duplicated: true,
+        delayBeforeStart: 0
+      });
     }
   });
 }

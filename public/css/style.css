@@ -1,0 +1,201 @@
+body {
+  overflow: hidden;
+}
+
+/* DISPLAY PAGE */
+.body-desktop.container-fluid {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.sebelum-footer {
+  margin: 0 auto -50px;
+  height: 100%;
+}
+
+.push,
+.footer {
+  height: 50px;
+}
+
+.kotak-video {
+  background: black;
+}
+
+.kotak-video h1 {
+  margin: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+nav {
+  width: 100%;
+  height: 90px;
+  padding: 5px 0;
+  color: #b7b5ff;
+  background: #010038 url('../img/nav-background.png') no-repeat left top;
+}
+
+nav h3 {
+  font-size: 16px;
+  margin-bottom: 5px !important;
+}
+
+nav p {
+  font-size: 14px;
+}
+
+nav .logo-desktop {
+  width: 75px;
+  margin-right: 10px;
+}
+
+.body-content {
+  position: relative;
+}
+
+.body-content iframe {
+  width: 100%;
+  margin-bottom: -6px;
+  height: calc(100vh - 140px);
+}
+
+.body-content footer {
+  width: 100%;
+  background: #ffdc34;
+  height: 50px;
+  overflow: hidden;
+}
+
+.body-sidebar {
+  z-index: 20;
+  background: white;
+  overflow: hidden;
+}
+
+.loket-row {
+  width: 100%;
+  padding: 10px 20px;
+  background: #010038 url('../img/loket-background.png') no-repeat right center;
+  background-size: contain;
+  margin: 15px 0;
+  color: white;
+
+}
+
+footer {
+  padding-top: 8px;
+  color: #69590e;
+}
+
+/* QUEUE PAGE */
+.button-antrian {
+  width: 100%;
+  padding: 10px;
+  background: #010038;
+  color: #b7b5ff;
+  border: unset;
+  margin: 15px 0;
+  border-radius: 4px;
+  transition: .50s ease-in-out;
+}
+
+.button-antrian:hover {
+  background: #f1f1f1;
+}
+
+.button-antrian h5 {
+  color: white;
+}
+
+.button-antrian:hover h5 {
+  color: #5d5d5d;
+}
+
+.body-antrian {
+  background: url('../img/antrian-background.png') no-repeat center bottom;
+  background-size: cover;
+}
+
+.container-antrian {
+  height: 100vh;
+}
+
+.container-antrian .row {
+  width: 100%
+}
+
+.container-antrian .row .col-12 .logo-desktop {
+  width: 100px;
+  display: table;
+  margin: auto;
+}
+
+.container-antrian .row .col-12 h3 {
+  text-align: center;
+  color: #5d5d5d;
+  font-weight: bold;
+}
+
+.container-antrian .row .col-12 h4 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #cacaca;
+}
+
+@media screen and (min-width:576px) {
+
+  /* DISPLAY PAGE */
+  nav h3 {
+    font-size: 18px;
+    margin-bottom: 5px !important;
+  }
+
+  nav p {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:768px) {
+
+  /* DISPLAY PAGE */
+  nav h3 {
+    font-size: 22px;
+  }
+
+  nav p {
+    font-size: 18px;
+  }
+
+  .body-sidebar {
+    height: 100%;
+  }
+
+  .body-content {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width:992px) {
+
+  /* DISPLAY PAGE */
+  nav h3 {
+    font-size: 24px;
+  }
+
+  nav p {
+    font-size: 18px;
+  }
+
+  .body-sidebar {
+    height: 100%;
+  }
+
+  .body-content {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width:1200px) {}

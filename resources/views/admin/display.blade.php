@@ -24,7 +24,7 @@
           @if ($data->logo_perusahaan == "")
           KOSONG
           @else
-          <img src="{{asset("uploads/display/$data->logo_perusahaan")}}" class="img-fluid" alt="Responsive image">
+          <img src="{{asset("uploads/display/$data->logo_perusahaan")}}" class="img-fluid" alt="Responsive image" width="200px" height="200px">
           @endif
         </div>
       </div>

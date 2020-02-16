@@ -84,12 +84,13 @@ class AdminController extends Controller
       $videoFileName = "video." . $video->getClientOriginalExtension();
       $video->move(public_path('uploads/display'), $videoFileName);
     }
+    $dataDisplayLama = DB::table('display')->where('id', 1)->first();
     $update = [
       'nama_perusahaan' => $request->nama_perusahaan,
-      'logo_perusahaan' => isset($logoFileName) ? $logoFileName : "",
+      'logo_perusahaan' => isset($logoFileName) ? $logoFileName : $dataDisplayLama->logo_perusahaan,
       'alamat_perusahaan' => $request->alamat_perusahaan,
       'running_text' => $request->running_text,
-      'video_display' => isset($videoFileName) ? $videoFileName : "",
+      'video_display' => isset($videoFileName) ? $videoFileName : $dataDisplayLama->video_display,
     ];
     $id = $request->id_display;
     DB::table('display')->where('id', $id)->update($update);
