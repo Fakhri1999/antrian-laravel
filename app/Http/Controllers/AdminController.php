@@ -109,4 +109,33 @@ class AdminController extends Controller
     ->get();
     return view('admin/rekapan/antrian', ['data' => $result]);
   }
+
+  public function printAntrian(Request $request){
+    $tanggal = $this->changeDateFormat($request->tanggal);
+    $result = DB::table('antrian as a')
+    ->join('layanan as l', 'l.id', 'a.id_layanan')
+    ->where('a.id', '>', '0')
+    ->where('a.tanggal_pembuatan', $tanggal)
+    ->orderBy('a.nomor_antrian', 'asc')
+    ->select('a.*', 'l.nama_layanan')
+    ->get();
+    if(sizeof($result) == 0){
+      return redirect('admin/rekapan')->with('status', "<script>Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Data antrian kosong'
+      })</script>");
+    }
+    return view('admin/rekapan/print', ['data' => $result]);
+  }
+
+  public function printAntrianGet(){
+    return redirect("admin/rekapan");
+  }
+
+  private function changeDateFormat($date)
+  {
+    $data = explode("-", $date);
+    return "$data[2]-$data[1]-$data[0]";
+  }
 }

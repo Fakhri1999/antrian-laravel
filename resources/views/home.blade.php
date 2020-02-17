@@ -17,7 +17,7 @@
   <div class="container container-antrian d-flex align-items-center justify-content-center">
     <div class="row">
       <div class="col-12">
-        <img class="logo-desktop" src="{{asset("upload/display/$data->logo_perusahaan")}}" alt="">
+        <img class="logo-desktop" src="{{asset("uploads/display/$data->logo_perusahaan")}}" alt="">
         <h3>{{$data->nama_perusahaan}}</h3>
         <h4>{{$data->alamat_perusahaan}}</h4>
       </div>
