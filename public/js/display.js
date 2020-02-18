@@ -9,7 +9,6 @@ const baseUrl =
 const API_KEY = $("#API_KEY").val();
 $(document).ready(async function() {
   let check = refreshLoket();
-
   let ada = false;
   let time = 0;
   Echo.channel(`display`).listen("DisplayQueueUpdated", async e => {
@@ -28,9 +27,14 @@ $(document).ready(async function() {
       x.muted = false;
       x.play();
       Swal.fire({
-        icon: "info",
-        title: `Nomor antrian ${queue.nomor_antrian}
-        Harap ke loket nomor ${queue.urutan}`
+        icon: "",
+        title: `NOMOR ANTRIAN ${queue.nomor_antrian}
+        HARAP KE LOKET NOMOR ${queue.urutan}`,
+        customClass: {
+          popup: "swal-custom",
+          title: "swal-content-custom"
+        },
+        showConfirmButton: false
       });
     }, time);
     time += 2500;
@@ -46,9 +50,15 @@ $(document).ready(async function() {
           onstart: () => {
             if (!Swal.isVisible()) {
               Swal.fire({
-                icon: "info",
-                title: `Nomor antrian ${queue.nomor_antrian}
-                Harap ke loket nomor ${queue.urutan}`
+                icon: "",
+                title: `NOMOR ANTRIAN ${queue.nomor_antrian}
+                HARAP KE LOKET NOMOR ${queue.urutan}`,
+                width: "90%",
+                customClass: {
+                  popup: "swal-custom",
+                  content: "swal-content-custom"
+                },
+                showConfirmButton: false
               });
             }
             document.getElementById("videoDisplay").pause();

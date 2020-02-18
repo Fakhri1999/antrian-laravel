@@ -8,6 +8,16 @@
   <link rel="shortcut icon" href="{{asset("uploads/display/$data->logo_perusahaan")}}" type="image/x-icon">
   <link rel="stylesheet" href="{{asset('css/bootstrap-4.4.1.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+  <style>
+    .swal-custom {
+      width: 95% !important;
+      height: 95% !important;
+    }
+
+    .swal-content-custom {
+      font-size: 80px !important;
+    }
+  </style>
 </head>
 
 <body>
