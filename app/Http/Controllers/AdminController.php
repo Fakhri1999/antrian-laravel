@@ -71,6 +71,7 @@ class AdminController extends Controller
       'nama_perusahaan' => 'required',
       'alamat_perusahaan' => 'required',
       'running_text' => 'required',
+      'slogan' => 'required',
       'logo_perusahaan' => 'mimes:jpg,jpeg,png',
       'video_display' => 'mimes:mp4,mkv,mpg,webm,m4v,avi'
     ]);
@@ -90,6 +91,7 @@ class AdminController extends Controller
       'logo_perusahaan' => isset($logoFileName) ? $logoFileName : $dataDisplayLama->logo_perusahaan,
       'alamat_perusahaan' => $request->alamat_perusahaan,
       'running_text' => $request->running_text,
+      'slogan' => $request->slogan,
       'video_display' => isset($videoFileName) ? $videoFileName : $dataDisplayLama->video_display,
     ];
     $id = $request->id_display;

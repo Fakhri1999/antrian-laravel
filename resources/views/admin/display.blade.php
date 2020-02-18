@@ -53,6 +53,14 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-lg-2">
+          Slogan
+        </div>
+        <div class="col-lg-10">
+          : {{$data->slogan}}
+        </div>
+      </div>
+      <div class="row">
         <div class="col-lg-2 d-flex align-items-center">
           Video Display
         </div>
@@ -110,6 +118,14 @@
               placeholder="Masukkan running text" required value="{{$data->running_text}}">
             @if ($errors->has('running_text'))
             <small class="form-text text-danger">{{$errors->first('running_text')}}</small>
+            @endif
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Slogan</label>
+            <input type="text" class="form-control" id="running-text" name="slogan"
+              placeholder="Masukkan slogan" required value="{{$data->slogan}}">
+            @if ($errors->has('slogan'))
+            <small class="form-text text-danger">{{$errors->first('slogan')}}</small>
             @endif
           </div>
           <div class="form-group">

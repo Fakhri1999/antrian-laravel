@@ -40,13 +40,13 @@
   <div class="d-none">
     <div class="print">
       <div class="center text-center">
-        <h3>KPP Pratama Biak</h3>
-        <h4>Jl. Adibai No. 1 Sumberkar, Samofa, Papua</h4>
+        <h3>{{$data->nama_perusahaan}}</h3>
+        <h4>{{$data->alamat_perusahaan}}</h4>
         <p>Nomor Antrian</p>
         <h1 id="antrian">A001</h1>
         <p><span id="tanggal">15 Februari 2020</span></p>
         <p id="jam">15:00:58</p>
-        <p><b>Lunasi Pajaknya Awasi Penggunaannya</b></p>
+        <p><b>{{$data->slogan}}</b></p>
       </div>
     </div>
   </div>
