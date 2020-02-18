@@ -8,7 +8,7 @@ const baseUrl =
     : `${protocol}//${hostname}/`;
 const API_KEY = $("#API_KEY").val();
 $(document).ready(async function() {
-  let check = await refreshLoket();
+  let check = refreshLoket();
 
   let ada = false;
   let time = 0;
@@ -21,37 +21,19 @@ $(document).ready(async function() {
       }
     }
     let queue = e.queue.antrian;
-    // setTimeout(() => {
-    //   refreshLoket();
-    //   $("#nomor-antrian").html(queue.nomor_antrian);
-    //   $("#loket-antrian").html(queue.urutan);
-    //   var x = document.getElementById("in-sound");
-    //   x.muted = false;
-    //   x.play();
-    //   responsiveVoice.speak(
-    //     `Nomor Antrian ${queue.nomor_antrian} Harap ke Loket nomor ${queue.urutan}.`,
-    //     "Indonesian Female",
-    //     {
-    //       pitch: 1,
-    //       rate: 1,
-    //       volume: 1,
-    //       onstart: () => {
-    //         ada = true;
-    //       },
-    //       onend: () => {
-    //         ada = false;
-    //         time -= time == 0 ? 0 : 3000;
-    //       }
-    //     }
-    //   );
-    // }, time);
     refreshLoket();
     setTimeout(() => {
+      document.getElementById("videoDisplay").pause();
       var x = document.getElementById("in-sound");
       x.muted = false;
       x.play();
+      Swal.fire({
+        icon: "info",
+        title: `Nomor antrian ${queue.nomor_antrian}
+        Harap ke loket nomor ${queue.urutan}`
+      });
     }, time);
-    time += await 2500;
+    time += 2500;
     console.log(`time tengah : ${time}`);
     setTimeout(() => {
       responsiveVoice.speak(
@@ -62,6 +44,14 @@ $(document).ready(async function() {
           rate: 0.9,
           volume: 1,
           onstart: () => {
+            if (!Swal.isVisible()) {
+              Swal.fire({
+                icon: "info",
+                title: `Nomor antrian ${queue.nomor_antrian}
+                Harap ke loket nomor ${queue.urutan}`
+              });
+            }
+            document.getElementById("videoDisplay").pause();
             ada = true;
           },
           onend: () => {
@@ -70,6 +60,10 @@ $(document).ready(async function() {
             console.log(`time sesudah : ${time}`);
             if (time < 0) {
               time = 0;
+            }
+            if (!responsiveVoice.isPlaying()) {
+              document.getElementById("videoDisplay").play();
+              Swal.close();
             }
           }
         }
@@ -100,8 +94,8 @@ function refreshLoket() {
       </div>`;
       });
       $(".rowLoket").html(render);
-      $(".marquee-vert").marquee('destroy')
-      $(".marquee-horz").marquee('destroy')
+      $(".marquee-vert").marquee("destroy");
+      $(".marquee-horz").marquee("destroy");
       $(".marquee-horz").marquee({
         speed: 100,
         gap: 50,

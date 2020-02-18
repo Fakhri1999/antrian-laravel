@@ -5,9 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{$data->nama_perusahaan}}</title>
-  <link rel="shortcut icon" href="{{asset('img/LOGOdepkeu.png')}}" type="image/x-icon">
-  {{-- <link rel="stylesheet" href="{{asset('css/bootstrap-4.4.1.min.css')}}"> --}}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="{{asset("uploads/display/$data->logo_perusahaan")}}" type="image/x-icon">
+  <link rel="stylesheet" href="{{asset('css/bootstrap-4.4.1.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 
@@ -40,7 +39,7 @@
             </div>
           </nav>
           <div class="kotak-video w-100 h-100">
-            <video width="100%" height="100%" autoplay loop muted>
+            <video width="100%" height="80%" id="videoDisplay" autoplay loop>
               <source src="{{asset("uploads/display/$data->video_display")}}" type="video/mp4">
               Your browser does not support the video tag.
             </video>
@@ -63,6 +62,7 @@
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/jquery.marquee.min.js')}}"></script>
     <script src="{{asset('js/responsive-voice.js')}}"></script>
+    <script src="{{asset('js/sweetalert2@9.js')}}"></script>
     <script src="{{asset('js/display.js')}}"></script>
 </body>
 
