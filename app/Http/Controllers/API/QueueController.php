@@ -122,10 +122,10 @@ class QueueController extends Controller
     $dateNow = date("d-m-Y");
     DB::table('antrian')->where('id', $currentId)->update(['id_petugas' => $petugasId, 'status' => '9']);
     $result = DB::table('antrian')
-    ->where('tanggal_pembuatan', $dateNow)
-    ->where('status', '1')
-    ->where('id_layanan', $layananId)
-    ->orderBy('jam_pembuatan', 'asc')->get();
+      ->where('tanggal_pembuatan', $dateNow)
+      ->where('status', '1')
+      ->where('id_layanan', $layananId)
+      ->orderBy('jam_pembuatan', 'asc')->get();
     if (sizeof($result) == 0) {
       DB::table('loket')->where('id_petugas', $petugasId)->update(['id_antrian' => '0']);
       event(new LoketQueueUpdated(["nomor_loket" => $nomorLoket, "message" => "New queue. Please update yours"]));
@@ -177,5 +177,27 @@ class QueueController extends Controller
       ->where('a.kepuasan', '=', 'TIDAK MENGISI')
       ->first();
     event(new DisplayQueueUpdated(["antrian" => $result, "message" => "New queue. Please update yours"]));
+  }
+
+  public function print(Request $request)
+  {
+    if ($request->auth != env('API_KEY')) {
+      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+    }
+    $queueId = $request->id;
+    $data = DB::table('display')->where('id', '1')->first();
+    $connector = new WindowsPrintConnector("\\wind7\usb\epson");
+    $printer = new Escpos($connector);
+    // $logo = EscposImage::load(public_path("uploads/display/logo.png"));
+    // $printer->graphics($logo);
+    $printer->initialize();
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->setTextSize(3, 3);
+    $printer->text($data->nama_perusahaan . "\n");
+    $printer->setTextSize(2, 2);
+    $printer->text($data->alamat_perusahaan . "\n");
+    $printer->setTextSize(5, 5);
+    $printer->text($data->alamat_perusahaan . "\n");
+    $printer->cut();
   }
 }

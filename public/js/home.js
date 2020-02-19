@@ -38,6 +38,7 @@ $(document).ready(function() {
           $(".print").printThis({
             importStyle: true
           });
+          // $.post(`${baseUrl}api/v1/queue/print`, {id: res.data.id, auth: API_KEY}, success)
           Swal.fire({
             icon: "success",
             title: "Sukses",

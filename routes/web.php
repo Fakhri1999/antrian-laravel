@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@showHome');
+Route::get('/tes', 'HomeController@tes');
 
 Route::get('admin/login', 'AdminController@showLogin');
 Route::post('admin/login', 'AdminController@login');
