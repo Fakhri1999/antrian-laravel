@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@showHome');
 Route::get('/tes', 'HomeController@tes');
+Route::get('/print', 'HomeController@printAntrian');
 
 Route::get('admin/login', 'AdminController@showLogin');
 Route::post('admin/login', 'AdminController@login');
@@ -42,6 +43,3 @@ Route::group(['prefix' => 'petugas', 'middleware' => ['isPetugasLoggedIn']], fun
 });
 
 Route::get('/display', 'HomeController@showDisplay');
-Route::get('/print', function(){
-  return view('print');
-});

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Events\QueueUpdated;
 use App\Events\LoketQueueUpdated;
 use App\Events\DisplayQueueUpdated;
+use Mike42\Escpos\PrintConnectors\DummyPrintConnector;
+use Mike42\Escpos\Printer;
 
 class QueueController extends Controller
 {
@@ -185,19 +187,23 @@ class QueueController extends Controller
       return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
     }
     $queueId = $request->id;
-    $data = DB::table('display')->where('id', '1')->first();
-    $connector = new WindowsPrintConnector("\\wind7\usb\epson");
-    $printer = new Escpos($connector);
-    // $logo = EscposImage::load(public_path("uploads/display/logo.png"));
-    // $printer->graphics($logo);
-    $printer->initialize();
-    $printer->setJustification(Printer::JUSTIFY_CENTER);
-    $printer->setTextSize(3, 3);
-    $printer->text($data->nama_perusahaan . "\n");
-    $printer->setTextSize(2, 2);
-    $printer->text($data->alamat_perusahaan . "\n");
-    $printer->setTextSize(5, 5);
-    $printer->text($data->alamat_perusahaan . "\n");
-    $printer->cut();
+    try {
+      $data = DB::table('display')->where('id', '1')->first();
+      $connector = new DummyPrintConnector();
+      $printer = new Printer($connector);
+      $printer->initialize();
+      $printer->setJustification(Printer::JUSTIFY_CENTER);
+      $printer->setTextSize(3, 3);
+      $printer->text($data->nama_perusahaan . "\n");
+      $printer->setTextSize(2, 2);
+      $printer->text($data->alamat_perusahaan . "\n");
+      $printer->setTextSize(5, 5);
+      $printer->text($data->alamat_perusahaan . "\n");
+      $data = $connector->getData();
+      $base64data = base64_encode($data);
+      return view('print', ['data' => $base64data]);
+    } catch (Exception $e) {
+      echo "Couldn't print to this printer: " . $e->getMessage() . "\n";
+    }
   }
 }

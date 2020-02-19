@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\DummyPrintConnector;
 use Mike42\Escpos\Printer;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 class HomeController extends Controller
 {
@@ -18,7 +17,8 @@ class HomeController extends Controller
     return view('home', ['API_KEY' => env("API_KEY"), 'layanan' => $result, 'data' => $display]);
   }
 
-  public function tes(){
+  public function tes()
+  {
     echo public_path();
   }
 
@@ -30,19 +30,25 @@ class HomeController extends Controller
 
   public function printAntrian()
   {
-    $data = DB::table('display')->where('id', '1')->first();
-    $connector = new WindowsPrintConnector("\\wind7\usb\epson");
-    $printer = new Escpos($connector);
-    // $logo = EscposImage::load(public_path("uploads/display/logo.png"));
-    // $printer->graphics($logo);
-    $printer->initialize();
-    $printer->setJustification(Printer::JUSTIFY_CENTER);
-    $printer->setTextSize(3, 3);
-    $printer->text($data->nama_perusahaan . "\n");
-    $printer->setTextSize(2, 2);
-    $printer->text($data->alamat_perusahaan . "\n");
-    $printer->setTextSize(5, 5);
-    $printer->text($data->alamat_perusahaan . "\n");
-    $printer->cut();
+    try {
+      $data = DB::table('display')->where('id', '1')->first();
+      $antrian = DB::table('antrian')->orderBy('id', 'desc')->get();
+      $connector = new DummyPrintConnector();
+      $printer = new Printer($connector);
+      // $printer->initialize();
+      $printer->setJustification(Printer::JUSTIFY_CENTER);
+      $printer->setTextSize(3, 3);
+      $printer->text($data->nama_perusahaan . "\n");
+      $printer->setTextSize(2, 2);
+      $printer->text($data->alamat_perusahaan . "\n");
+      $printer->setTextSize(5, 5);
+      $printer->text($antrian[0]->nomor_antrian . "\n");
+      $data = $connector->getData();
+      $printer->close();
+      $base64data = base64_encode($data);
+      return view('print_2', ['data' => $base64data]);
+    } catch (Exception $e) {
+      echo "Couldn't print to this printer: " . $e->getMessage() . "\n";
+    }
   }
 }
