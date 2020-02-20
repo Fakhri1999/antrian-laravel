@@ -106,21 +106,37 @@ class AdminController extends Controller
   public function showRekapan(){
     $result = DB::table('antrian as a')
     ->join('layanan as l', 'l.id', 'a.id_layanan')
+    ->join('petugas as p', 'p.id', 'a.id_petugas')
     ->where('a.id', '>', '0')
-    ->select('a.*', 'l.nama_layanan')
+    ->select('a.*', 'l.nama_layanan', 'p.nama as nama_petugas')
     ->get();
-    return view('admin/rekapan/antrian', ['data' => $result]);
+    $petugas = DB::table('petugas')->where('id', '>', '0')->get();
+    return view('admin/rekapan/antrian', ['data' => $result, 'petugas' => $petugas]);
   }
 
   public function printAntrian(Request $request){
     $tanggal = $this->changeDateFormat($request->tanggal);
-    $result = DB::table('antrian as a')
-    ->join('layanan as l', 'l.id', 'a.id_layanan')
-    ->where('a.id', '>', '0')
-    ->where('a.tanggal_pembuatan', $tanggal)
-    ->orderBy('a.nomor_antrian', 'asc')
-    ->select('a.*', 'l.nama_layanan')
-    ->get();
+    $petugasId = $request->petugasId;
+    if($petugasId == "kosong"){
+      $result = DB::table('antrian as a')
+      ->join('layanan as l', 'l.id', 'a.id_layanan')
+      ->join('petugas as p', 'p.id', 'a.id_petugas')
+      ->where('a.id', '>', '0')
+      ->where('a.tanggal_pembuatan', $tanggal)
+      ->orderBy('a.nomor_antrian', 'asc')
+      ->select('a.*', 'l.nama_layanan', 'p.nama as nama_petugas')
+      ->get();
+    } else {
+      $result = DB::table('antrian as a')
+      ->join('layanan as l', 'l.id', 'a.id_layanan')
+      ->join('petugas as p', 'p.id', 'a.id_petugas')
+      ->where('a.id', '>', '0')
+      ->where('a.tanggal_pembuatan', $tanggal)
+      ->where('a.id_petugas', $petugasId)
+      ->orderBy('a.nomor_antrian', 'asc')
+      ->select('a.*', 'l.nama_layanan', 'p.nama as nama_petugas')
+      ->get();
+    }
     if(sizeof($result) == 0){
       return redirect('admin/rekapan')->with('status', "<script>Swal.fire({
         icon: 'error',

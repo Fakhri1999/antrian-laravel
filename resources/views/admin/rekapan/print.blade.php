@@ -20,6 +20,7 @@
               <th scope="col">No</th>
               <th scope="col">Antrian</th>
               <th scope="col">Layanan</th>
+              <th scope="col">Petugas</th>
               <th scope="col">Status</th>
               <th scope="col">Kepuasan</th>
               <th scope="col">Jam</th>
@@ -31,6 +32,7 @@
                 <th scope="row">{{$i + 1}}</th>
                 <td>{{$data[$i]->nomor_antrian}}</td>
                 <td>{{$data[$i]->nama_layanan}}</td>
+                <td>{{$data[$i]->nama_petugas}}</td>
                 @if ($data[$i]->status == 1)
                 <td>Masih antri</td>
                 @elseif($data[$i]->status == 10)
