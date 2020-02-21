@@ -31,22 +31,42 @@ class HomeController extends Controller
   public function printAntrian()
   {
     try {
-      $data = DB::table('display')->where('id', '1')->first();
+      $display = DB::table('display')->where('id', '1')->first();
       $antrian = DB::table('antrian')->orderBy('id', 'desc')->get();
       $connector = new DummyPrintConnector();
       $printer = new Printer($connector);
-      // $printer->initialize();
       $printer->setJustification(Printer::JUSTIFY_CENTER);
+      $printer->setFont(Printer::FONT_B);
+      $printer->setEmphasis(true);
       $printer->setTextSize(3, 3);
-      $printer->text($data->nama_perusahaan . "\n");
-      $printer->setTextSize(2, 2);
-      $printer->text($data->alamat_perusahaan . "\n");
-      $printer->setTextSize(5, 5);
-      $printer->text($antrian[0]->nomor_antrian . "\n");
+      $printer->setEmphasis(false);
+      $printer->text("\n");
+      $arr = explode(" ", $display->nama_perusahaan);
+      $printer->text("$arr[0] $arr[1]\n$arr[2] $arr[3]" . "\n\n");
+      $printer->setTextSize(1, 1);
+      $printer->text($display->alamat_perusahaan . "\n\n");
+      $printer->text("Nomor Antrian\n");
+      $printer->setTextSize(8, 8);
+      $printer->setEmphasis(true);
+      $printer->text($antrian[0]->nomor_antrian . "\n\n");
+      $printer->setEmphasis(false);
+      $printer->setTextSize(1, 1);
+      $printer->text($antrian[0]->tanggal_pembuatan . "\n");
+      $printer->text($antrian[0]->jam_pembuatan . "\n\n");
+      $printer->text($display->slogan . "\n\n");
+      $printer->cut();
       $data = $connector->getData();
       $printer->close();
       $base64data = base64_encode($data);
-      return view('print_2', ['data' => $base64data]);
+      $arrTanggal = explode("-", $antrian[0]->tanggal_pembuatan);
+      setlocale(LC_TIME, "id_ID");
+      $tanggal = strftime("%A, %d %B %Y", mktime(0, 0, 0, (int)$arrTanggal[1], (int)$arrTanggal[0], (int)$arrTanggal[2]));
+      $tanggalCek = explode(" ", $tanggal);
+      if($tanggalCek[2] == 'Pebruari'){
+        $tanggalCek[2] = "Februari";
+      }
+      $tanggal = "$tanggalCek[0] $tanggalCek[1] $tanggalCek[2] $tanggalCek[3]";
+      return view('print_2', ['data' => $base64data, 'tanggal' => $tanggal]);
     } catch (Exception $e) {
       echo "Couldn't print to this printer: " . $e->getMessage() . "\n";
     }

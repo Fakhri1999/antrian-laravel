@@ -29,16 +29,8 @@ $(document).ready(function() {
         });
       },
       success: async (res, status, xhr) => {
+        console.log(res);
         if (xhr.status == 201) {
-          console.table(res.data);
-          let antrian = res.data;
-          $("#antrian").html(antrian.nomor_antrian);
-          $("#tanggal").html(day);
-          $("#jam").html(antrian.jam_pembuatan);
-          $(".print").printThis({
-            importStyle: true
-          });
-          // $.post(`${baseUrl}api/v1/queue/print`, {id: res.data.id, auth: API_KEY}, success)
           Swal.fire({
             icon: "success",
             title: "Sukses",
@@ -47,6 +39,27 @@ $(document).ready(function() {
             timerProgressBar: true
           });
         }
+        $.ajax({
+          url: "http://localhost:9100/htbin/kp.py",
+          data: {
+            p: "TM-P31xx Series",
+            data: res.rawPrintData
+          },
+          success: function(bytes) {
+            if(bytes == ""){
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Gagal mencetak antrian",
+              });
+            } else {
+              console.log(bytes)
+            }
+          },
+          error: res => {
+            console.log(res);
+          }
+        });
       },
       error: async res => {
         Swal.fire({
