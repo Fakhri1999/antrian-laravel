@@ -25,7 +25,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
   Route::post('queue/petugas/skip/{layananId}', 'API\QueueController@skipLatestQueueFromAService');
   Route::post('queue/kepuasan', 'API\QueueController@updateKepuasanOfQueue');
   Route::post('queue/recall', 'API\QueueController@recall');
-  Route::post('queue/print', 'API\QueueController@print');
+  Route::get('queue/admin/date/{jumlah?}', 'API\QueueController@getQueueForAdminByDate');
 
   Route::get('employee', 'API\EmployeeController@getEmployee');
   Route::post('employee', 'API\EmployeeController@addEmployee');

@@ -222,29 +222,24 @@ class QueueController extends Controller
     event(new DisplayQueueUpdated(["antrian" => $result, "message" => "New queue. Please update yours"]));
   }
 
-  public function print(Request $request)
-  {
-    if ($request->auth != env('API_KEY')) {
-      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+  public function getQueueForAdminByDate($jumlah = 30){
+    if($jumlah == null || $jumlah == 'all'){
+      $antrianId = DB::table('antrian')
+      ->select(DB::raw('count(*) as jumlah, tanggal_pembuatan'))
+      ->where('id', '>', '0')
+      ->groupBy('tanggal_pembuatan')
+      ->orderBy('id', 'asc')
+      ->get();
+    } else{
+      $antrianId = DB::table('antrian')
+      ->select(DB::raw('count(*) as jumlah, tanggal_pembuatan'))
+      ->where('id', '>', '0')
+      ->groupBy('tanggal_pembuatan')
+      ->orderBy('id', 'asc')
+      ->limit($jumlah)
+      ->get();
     }
-    $queueId = $request->id;
-    try {
-      $data = DB::table('display')->where('id', '1')->first();
-      $connector = new DummyPrintConnector();
-      $printer = new Printer($connector);
-      $printer->initialize();
-      $printer->setJustification(Printer::JUSTIFY_CENTER);
-      $printer->setTextSize(3, 3);
-      $printer->text($data->nama_perusahaan . "\n");
-      $printer->setTextSize(2, 2);
-      $printer->text($data->alamat_perusahaan . "\n");
-      $printer->setTextSize(5, 5);
-      $printer->text($data->alamat_perusahaan . "\n");
-      $data = $connector->getData();
-      $base64data = base64_encode($data);
-      return view('print', ['data' => $base64data]);
-    } catch (Exception $e) {
-      echo "Couldn't print to this printer: " . $e->getMessage() . "\n";
-    }
+    return response()->json(['status' => 'success', 'message' => $antrianId], 200);
   }
+
 }
