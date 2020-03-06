@@ -8,14 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-  public function showLogin()
+  public function showLogin(Request $request)
   {
     if (session('admin_username') != null) {
       return redirect('admin');
     } else if (session('petugas_username') != null) {
       return redirect('petugas');
     }
-    return view('admin/login');
+    if($request->r != null){
+      return view('admin/login', ['redirect' => $request->r, 'action' => "admin/login?r=$request->r"]);
+    } else {    
+      return view('admin/login', ['action' => 'admin/login']);
+    }
   }
   public function login(Request $request)
   {
@@ -30,7 +34,11 @@ class AdminController extends Controller
       });</script>');
     }
     session(['admin_username' => $username, 'admin_name' => $result->nama]);
-    return redirect('admin');
+    if($request->r != null){
+      return redirect($request->r);
+    } else {
+      return redirect('admin');
+    }
   }
 
   public function index()

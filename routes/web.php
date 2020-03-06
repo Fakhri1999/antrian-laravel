@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', 'HomeController@showHome');
-Route::get('/tes', 'HomeController@tes');
-Route::get('/print', 'HomeController@printAntrian');
+Route::get('antriantersayang/antrian', 'HomeController@showHome');
+Route::get('antriantersayang/display', 'HomeController@showDisplay');
+
+Route::get('register', 'PelangganController@showRegister');
+Route::post('register', 'PelangganController@register');
 
 Route::get('admin/login', 'AdminController@showLogin');
 Route::post('admin/login', 'AdminController@login');
@@ -41,5 +43,3 @@ Route::group(['prefix' => 'petugas', 'middleware' => ['isPetugasLoggedIn']], fun
   Route::get('/loket/{id}/kepuasan', 'PetugasController@showKepuasan');
   Route::get('/logout', 'PetugasController@logout');
 });
-
-Route::get('/display', 'HomeController@showDisplay');

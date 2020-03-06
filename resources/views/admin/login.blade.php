@@ -40,7 +40,7 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Login dengan akun admin</h1>
                   </div>
-                  <form class="user" method="POST" action="{{url('admin/login')}}">
+                  <form class="user" method="POST" action="{{url($action)}}">
                     {{ csrf_field() }}
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="username"
