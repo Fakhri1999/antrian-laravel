@@ -14,8 +14,16 @@
 Route::get('antriantersayang/antrian', 'HomeController@showHome');
 Route::get('antriantersayang/display', 'HomeController@showDisplay');
 
+Route::get('login', 'PelangganController@showLogin');
+Route::post('login', 'PelangganController@login');
 Route::get('register', 'PelangganController@showRegister');
 Route::post('register', 'PelangganController@register');
+Route::get('aktivasi/{kode_pendaftaran}', 'PelangganController@activateAccount');
+Route::group(['middleware' => ['isLoggedIn']], function () {
+  Route::get('home', 'PelangganController@home');
+  Route::get('logout', 'PelangganController@logout');
+
+});
 
 Route::get('admin/login', 'AdminController@showLogin');
 Route::post('admin/login', 'AdminController@login');

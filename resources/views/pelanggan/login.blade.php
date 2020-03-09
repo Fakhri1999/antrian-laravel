@@ -9,33 +9,18 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-  <title>Register</title>
+  <title>Login</title>
 </head>
 
 <body>
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1>Register</h1>
-        <form method="POST" action="{{url('register')}}">
+        <h1>Login</h1>
+        <form method="POST" action="{{url('login')}}">
           {{ csrf_field() }}
-          <div class="form-group">
-            <label for="exampleInputEmail1">NPWP</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              placeholder="Enter NPWP" name="npwp" required>
-            @foreach ($errors->get('npwp') as $message)
-            <small id="emailHelp" class="form-text text-danger">{{$message}}</small>
-            @endforeach
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Nama</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              placeholder="Enter nama" name="nama" required>
-            @foreach ($errors->get('nama') as $message)
-            <small id="emailHelp" class="form-text text-danger">{{$message}}</small>
-            @endforeach
-          </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -52,23 +37,8 @@
             <small id="emailHelp" class="form-text text-danger">{{$message}}</small>
             @endforeach
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Konfirmasi Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Konfirmasi Password"
-              name="repassword" required>
-            @foreach ($errors->get('repassword') as $message)
-            <small id="emailHelp" class="form-text text-danger">{{$message}}</small>
-            @endforeach
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">No telp</label>
-            <input type="telp" class="form-control" id="exampleInputPassword1" placeholder="No telp" name="no_telp"
-              required>
-            @foreach ($errors->get('no_telp') as $message)
-            <small id="emailHelp" class="form-text text-danger">{{$message}}</small>
-            @endforeach
-          </div>
-          <button type="submit" class="btn btn-primary">Register</button>
+          {{-- <div class="g-recaptcha" data-sitekey="6Lee-98UAAAAAFDaesKbIATkld5Unv0spSo_vnDq"></div> --}}
+          <button type="submit" class="btn btn-primary">Login</button>
         </form>
       </div>
     </div>
@@ -85,6 +55,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
+  {!!session('status')!!}
 </body>
 
 </html>

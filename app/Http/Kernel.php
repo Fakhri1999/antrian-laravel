@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'cors' => \App\Http\Middleware\Cors::class,
         'isAdminLoggedIn' => \App\Http\Middleware\isAdminLoggedIn::class,
         'isPetugasLoggedIn' => \App\Http\Middleware\isPetugasLoggedIn::class,
+        'isLoggedIn' => \App\Http\Middleware\isLoggedIn::class,
     ];
 }
