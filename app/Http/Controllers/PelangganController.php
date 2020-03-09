@@ -13,5 +13,8 @@ class PelangganController extends Controller
 
   public function register(Request $request)
   {
+    // $this->validate($request, [
+    //   'npwp' => 'required|unique:',
+    // ])
   }
 }

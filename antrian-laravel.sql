@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2020 at 05:47 AM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.3.6
+-- Waktu pembuatan: 09 Mar 2020 pada 12.24
+-- Versi server: 10.1.36-MariaDB
+-- Versi PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Struktur dari tabel `admin`
 --
 
 CREATE TABLE `admin` (
@@ -36,7 +36,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `admin`
+-- Dumping data untuk tabel `admin`
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `nama`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `admin` (`id`, `username`, `password`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `antrian`
+-- Struktur dari tabel `antrian`
 --
 
 CREATE TABLE `antrian` (
@@ -60,7 +60,7 @@ CREATE TABLE `antrian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `antrian`
+-- Dumping data untuk tabel `antrian`
 --
 
 INSERT INTO `antrian` (`id`, `nomor_antrian`, `tanggal_pembuatan`, `jam_pembuatan`, `status`, `kepuasan`, `id_petugas`, `id_layanan`) VALUES
@@ -142,45 +142,50 @@ INSERT INTO `antrian` (`id`, `nomor_antrian`, `tanggal_pembuatan`, `jam_pembuata
 (90, 'A003', '12-02-2020', '00:17:31', 9, 'TIDAK MENGISI', 2, 1),
 (91, 'A004', '12-02-2020', '00:17:32', 10, 'TIDAK MENGISI', 2, 1),
 (92, 'A005', '12-02-2020', '00:17:33', 10, 'TIDAK MENGISI', 1, 1),
-(93, 'A006', '12-02-2020', '00:17:34', 1, 'TIDAK MENGISI', 0, 1);
+(93, 'A006', '12-02-2020', '00:17:34', 1, 'TIDAK MENGISI', 0, 1),
+(173, 'C001', '13-02-2020', '14:54:09', 1, 'TIDAK MENGISI', 0, 3),
+(174, 'A001', '13-02-2020', '15:03:20', 10, 'TIDAK MENGISI', 2, 1),
+(175, 'A002', '13-02-2020', '15:05:44', 10, 'TIDAK MENGISI', 2, 1),
+(176, 'A003', '13-02-2020', '15:05:47', 10, 'TIDAK MENGISI', 2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `display`
+-- Struktur dari tabel `display`
 --
 
 CREATE TABLE `display` (
   `id` int(11) NOT NULL,
   `nama_perusahaan` varchar(255) DEFAULT NULL,
   `logo_perusahaan` varchar(60) DEFAULT NULL,
-  `alamat_perusahaan` text DEFAULT NULL,
-  `running_text` text DEFAULT NULL,
-  `video_display` varchar(60) DEFAULT NULL
+  `alamat_perusahaan` text,
+  `running_text` text,
+  `video_display` varchar(60) DEFAULT NULL,
+  `slogan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `display`
+-- Dumping data untuk tabel `display`
 --
 
-INSERT INTO `display` (`id`, `nama_perusahaan`, `logo_perusahaan`, `alamat_perusahaan`, `running_text`, `video_display`) VALUES
-(1, 'wada', 'logo.png', 'adw', 'awd', 'video.mp4');
+INSERT INTO `display` (`id`, `nama_perusahaan`, `logo_perusahaan`, `alamat_perusahaan`, `running_text`, `video_display`, `slogan`) VALUES
+(1, 'wada', 'logo.png', 'adw', 'awd', 'video.mp4', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `layanan`
+-- Struktur dari tabel `layanan`
 --
 
 CREATE TABLE `layanan` (
   `id` int(11) NOT NULL,
   `nama_layanan` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '0',
   `urutan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `layanan`
+-- Dumping data untuk tabel `layanan`
 --
 
 INSERT INTO `layanan` (`id`, `nama_layanan`, `status`, `urutan`) VALUES
@@ -195,24 +200,24 @@ INSERT INTO `layanan` (`id`, `nama_layanan`, `status`, `urutan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `loket`
+-- Struktur dari tabel `loket`
 --
 
 CREATE TABLE `loket` (
   `id` int(11) NOT NULL,
   `nomor_loket` varchar(20) NOT NULL,
   `status` int(11) NOT NULL,
-  `id_petugas` int(11) NOT NULL DEFAULT 0,
+  `id_petugas` int(11) NOT NULL DEFAULT '0',
   `id_antrian` int(11) NOT NULL,
   `urutan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `loket`
+-- Dumping data untuk tabel `loket`
 --
 
 INSERT INTO `loket` (`id`, `nomor_loket`, `status`, `id_petugas`, `id_antrian`, `urutan`) VALUES
-(1, 'Loket 1', 1, 2, 91, 1),
+(1, 'Loket 1', 1, 2, 176, 1),
 (2, 'Loket 2', 1, 1, 92, 2),
 (3, 'Loket 3', 0, 0, 0, 3),
 (4, 'Loket 4', 0, 0, 0, 4),
@@ -225,7 +230,26 @@ INSERT INTO `loket` (`id`, `nomor_loket`, `status`, `id_petugas`, `id_antrian`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `petugas`
+-- Struktur dari tabel `pelanggan`
+--
+
+CREATE TABLE `pelanggan` (
+  `id` int(11) NOT NULL,
+  `npwp` varchar(16) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(60) DEFAULT NULL,
+  `no_telp` varchar(100) DEFAULT NULL,
+  `kode_pendaftaran` varchar(60) DEFAULT NULL,
+  `status` enum('0','1') DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `petugas`
 --
 
 CREATE TABLE `petugas` (
@@ -237,7 +261,7 @@ CREATE TABLE `petugas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `petugas`
+-- Dumping data untuk tabel `petugas`
 --
 
 INSERT INTO `petugas` (`id`, `username`, `nama`, `pin`, `status`) VALUES
@@ -250,80 +274,92 @@ INSERT INTO `petugas` (`id`, `username`, `nama`, `pin`, `status`) VALUES
 --
 
 --
--- Indexes for table `admin`
+-- Indeks untuk tabel `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `antrian`
+-- Indeks untuk tabel `antrian`
 --
 ALTER TABLE `antrian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `display`
+-- Indeks untuk tabel `display`
 --
 ALTER TABLE `display`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `layanan`
+-- Indeks untuk tabel `layanan`
 --
 ALTER TABLE `layanan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `loket`
+-- Indeks untuk tabel `loket`
 --
 ALTER TABLE `loket`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `petugas`
+-- Indeks untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `petugas`
 --
 ALTER TABLE `petugas`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT untuk tabel `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `antrian`
+-- AUTO_INCREMENT untuk tabel `antrian`
 --
 ALTER TABLE `antrian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
--- AUTO_INCREMENT for table `display`
+-- AUTO_INCREMENT untuk tabel `display`
 --
 ALTER TABLE `display`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `layanan`
+-- AUTO_INCREMENT untuk tabel `layanan`
 --
 ALTER TABLE `layanan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `loket`
+-- AUTO_INCREMENT untuk tabel `loket`
 --
 ALTER TABLE `loket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `petugas`
+-- AUTO_INCREMENT untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `petugas`
 --
 ALTER TABLE `petugas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
