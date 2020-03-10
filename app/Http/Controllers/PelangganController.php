@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +36,6 @@ class PelangganController extends Controller
       'status' => '0',
       'kode_pendaftaran' => $kodePendaftaran
     ];
-
     Mail::send('email.aktivasi_akun', ['kode_pendaftaran' => $kodePendaftaran], function ($message) use ($request) {
       $message->from('john@johndoe.com', 'John Doe');
       $message->to($request->email, $request->nama);
@@ -56,10 +54,10 @@ class PelangganController extends Controller
     }
     $result = DB::table('pelanggan')->where('kode_pendaftaran', $kodePendaftaran)->first();
     if ($result->status == 1) {
-      return redirect('login')->with('status', '<script>alert("Akun telah aktif")</script>');
+      return redirect('login')->with('status', '<script>alert("Akun telah terverifikasi")</script>');
     }
     DB::table('pelanggan')->where('kode_pendaftaran', $kodePendaftaran)->update(['status' => '1']);
-    return redirect('login')->with('status', '<script>alert("Aktivasi akun berhasil")</script>');
+    return redirect('login')->with('status', '<script>alert("Verifikasi akun berhasil")</script>');
   }
 
   public function showLogin()
@@ -69,12 +67,14 @@ class PelangganController extends Controller
 
   public function login(Request $request)
   {
+    
     if (session('pelanggan') != null) {
       return redirect('home');
     }
     $this->validate($request, [
       'email' => 'required',
-      'password' => 'required'
+      'password' => 'required',
+      'g-recaptcha-response' => 'required|captcha'
     ]);
 
     $where = [
@@ -86,14 +86,10 @@ class PelangganController extends Controller
       return redirect('login')->with('status', '<script>alert("username / password salah")</script>');
     }
     if ($result->status == 0) {
-      return redirect('login')->with('status', '<script>alert("akun belum aktif")</script>');
+      return redirect('login')->with('status', '<script>alert("Maaf, User kamu belum terverifikasi silahkan cek email kamu untuk verifikasi.")</script>');
     }
     session(['pelanggan' => $result]);
     return redirect('home');
-    // $client = new Client();
-    // $url = "https://www.google.com/recaptcha/api/siteverify";
-    // $params['form_params'] = ['secret' => '6Lee-98UAAAAAJHHb5ZNdkd1SJV7Q0FPY_qOcHtg', 'response' => ];
-    // $response = $client->post($url, $params);
   }
 
   public function home()
