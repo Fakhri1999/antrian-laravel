@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Mar 2020 pada 12.24
--- Versi server: 10.1.36-MariaDB
--- Versi PHP: 7.2.11
+-- Generation Time: Mar 11, 2020 at 05:08 AM
+-- Server version: 10.3.15-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -36,7 +36,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `nama`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `admin` (`id`, `username`, `password`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `antrian`
+-- Table structure for table `antrian`
 --
 
 CREATE TABLE `antrian` (
@@ -60,7 +60,7 @@ CREATE TABLE `antrian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `antrian`
+-- Dumping data for table `antrian`
 --
 
 INSERT INTO `antrian` (`id`, `nomor_antrian`, `tanggal_pembuatan`, `jam_pembuatan`, `status`, `kepuasan`, `id_petugas`, `id_layanan`) VALUES
@@ -151,21 +151,21 @@ INSERT INTO `antrian` (`id`, `nomor_antrian`, `tanggal_pembuatan`, `jam_pembuata
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `display`
+-- Table structure for table `display`
 --
 
 CREATE TABLE `display` (
   `id` int(11) NOT NULL,
   `nama_perusahaan` varchar(255) DEFAULT NULL,
   `logo_perusahaan` varchar(60) DEFAULT NULL,
-  `alamat_perusahaan` text,
-  `running_text` text,
+  `alamat_perusahaan` text DEFAULT NULL,
+  `running_text` text DEFAULT NULL,
   `video_display` varchar(60) DEFAULT NULL,
   `slogan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `display`
+-- Dumping data for table `display`
 --
 
 INSERT INTO `display` (`id`, `nama_perusahaan`, `logo_perusahaan`, `alamat_perusahaan`, `running_text`, `video_display`, `slogan`) VALUES
@@ -174,18 +174,18 @@ INSERT INTO `display` (`id`, `nama_perusahaan`, `logo_perusahaan`, `alamat_perus
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `layanan`
+-- Table structure for table `layanan`
 --
 
 CREATE TABLE `layanan` (
   `id` int(11) NOT NULL,
   `nama_layanan` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT 0,
   `urutan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data untuk tabel `layanan`
+-- Dumping data for table `layanan`
 --
 
 INSERT INTO `layanan` (`id`, `nama_layanan`, `status`, `urutan`) VALUES
@@ -200,20 +200,20 @@ INSERT INTO `layanan` (`id`, `nama_layanan`, `status`, `urutan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `loket`
+-- Table structure for table `loket`
 --
 
 CREATE TABLE `loket` (
   `id` int(11) NOT NULL,
   `nomor_loket` varchar(20) NOT NULL,
   `status` int(11) NOT NULL,
-  `id_petugas` int(11) NOT NULL DEFAULT '0',
+  `id_petugas` int(11) NOT NULL DEFAULT 0,
   `id_antrian` int(11) NOT NULL,
   `urutan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `loket`
+-- Dumping data for table `loket`
 --
 
 INSERT INTO `loket` (`id`, `nomor_loket`, `status`, `id_petugas`, `id_antrian`, `urutan`) VALUES
@@ -230,7 +230,7 @@ INSERT INTO `loket` (`id`, `nomor_loket`, `status`, `id_petugas`, `id_antrian`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pelanggan`
+-- Table structure for table `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -241,15 +241,23 @@ CREATE TABLE `pelanggan` (
   `password` varchar(60) DEFAULT NULL,
   `no_telp` varchar(100) DEFAULT NULL,
   `kode_pendaftaran` varchar(60) DEFAULT NULL,
-  `status` enum('0','1') DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` enum('0','1','10') DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `antrian_updated_at` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pelanggan`
+--
+
+INSERT INTO `pelanggan` (`id`, `npwp`, `nama`, `email`, `password`, `no_telp`, `kode_pendaftaran`, `status`, `created_at`, `updated_at`, `antrian_updated_at`) VALUES
+(8, '1', '2', 'fakhriimaduddin20@gmail.com', '056eafe7cf52220de2df36845b8ed170c67e23e3', '1', '8c4c88fe9ce871c6b0a1df969e7356e26bafe136', '1', '2020-03-09 18:10:25', '2020-03-11 04:05:48', '10-03-2020 10:42:01');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `petugas`
+-- Table structure for table `petugas`
 --
 
 CREATE TABLE `petugas` (
@@ -261,7 +269,7 @@ CREATE TABLE `petugas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `petugas`
+-- Dumping data for table `petugas`
 --
 
 INSERT INTO `petugas` (`id`, `username`, `nama`, `pin`, `status`) VALUES
@@ -274,89 +282,89 @@ INSERT INTO `petugas` (`id`, `username`, `nama`, `pin`, `status`) VALUES
 --
 
 --
--- Indeks untuk tabel `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `antrian`
+-- Indexes for table `antrian`
 --
 ALTER TABLE `antrian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `display`
+-- Indexes for table `display`
 --
 ALTER TABLE `display`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `layanan`
+-- Indexes for table `layanan`
 --
 ALTER TABLE `layanan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `loket`
+-- Indexes for table `loket`
 --
 ALTER TABLE `loket`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pelanggan`
+-- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `petugas`
+-- Indexes for table `petugas`
 --
 ALTER TABLE `petugas`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `antrian`
+-- AUTO_INCREMENT for table `antrian`
 --
 ALTER TABLE `antrian`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
--- AUTO_INCREMENT untuk tabel `display`
+-- AUTO_INCREMENT for table `display`
 --
 ALTER TABLE `display`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `layanan`
+-- AUTO_INCREMENT for table `layanan`
 --
 ALTER TABLE `layanan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `loket`
+-- AUTO_INCREMENT for table `loket`
 --
 ALTER TABLE `loket`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `pelanggan`
+-- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `petugas`
+-- AUTO_INCREMENT for table `petugas`
 --
 ALTER TABLE `petugas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
