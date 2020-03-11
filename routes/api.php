@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
+Route::post('antrian/pelanggan', 'API\CustomerController@addQueue');
 Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function () {
   Route::post('queue', 'API\QueueController@addQueue');
   Route::get('queue/petugas', 'API\QueueController@getQueueForEmployee');

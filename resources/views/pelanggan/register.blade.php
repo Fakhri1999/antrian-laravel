@@ -37,7 +37,7 @@
             {{-- <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
               placeholder="Enter NPWP" name="npwp" required pattern=".{15,15}" title="15 digit"> --}}
             <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              placeholder="Enter NPWP" name="npwp" required type="number">
+              placeholder="Enter NPWP" name="npwp" required type="number" autofocus>
             @foreach ($errors->get('npwp') as $message)
             <small id="emailHelp" class="form-text text-danger">{{$message}}</small>
             @endforeach

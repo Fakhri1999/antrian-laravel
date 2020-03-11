@@ -36,7 +36,7 @@
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              placeholder="Enter email" name="email" required>
+              placeholder="Enter email" name="email" required autofocus>
             @foreach ($errors->get('email') as $message)
             <small id="emailHelp" class="form-text text-danger">{{$message}}</small>
             @endforeach
@@ -56,7 +56,7 @@
             {{ $errors->first('g-recaptcha-response') }}
           </small>
           @endif
-          <button type="submit" class="btn btn-primary">Login</button>
+          <button type="submit" class="btn btn-primary mt-2">Login</button>
         </form>
       </div>
     </div>

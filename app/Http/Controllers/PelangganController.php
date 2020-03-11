@@ -67,7 +67,7 @@ class PelangganController extends Controller
 
   public function login(Request $request)
   {
-    
+
     if (session('pelanggan') != null) {
       return redirect('home');
     }
@@ -94,7 +94,9 @@ class PelangganController extends Controller
 
   public function home()
   {
-    return view('pelanggan/index');
+    $result = DB::table('layanan')->where('id', '>', '0')->get();
+    $display = DB::table('display')->where('id', 1)->first();
+    return view('pelanggan/index', ['layanan' => $result, 'data' => $display]);
   }
 
   public function logout()
