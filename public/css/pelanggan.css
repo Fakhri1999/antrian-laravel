@@ -1,0 +1,162 @@
+*{
+    outline: none;
+}
+/* ======================= LOGIN PAGE ======================= */
+.body-login{
+    background:#fff url('../img/city.png') no-repeat center;
+    background-size: cover;
+}
+.body-login .container .row.align-items-center{
+    height: 100vh;
+}
+.body-login .container .row.align-items-center .col-12 .box-login{
+    border: 2px solid #c9c9c9;
+    padding: 15px;
+    width: 100%;
+    max-width: 650px;
+    margin: 20px auto 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 10px 27px 3px rgba(204,204,204,.2);
+}
+.body-login .container .row.align-items-center .col-12 .box-login form .logo-box-login{
+    width:100%;
+    max-width: 100px;
+    margin:15px auto 15px auto;
+    display: table;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form h2{
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: #9a9a9a;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form .input-design{
+    padding: 8px 18px;
+    border:2px solid transparent;
+    background: #eef5f3; 
+    width: 100%;   
+    margin-bottom: 10px;
+    transition: all 0.3s ease 0s;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form label{
+    font-size: 14px;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form span{
+    color: #494dd0;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form .input-design:focus{
+    background:transparent; 
+    border:2px solid #eef5f3;
+    outline: none;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form .button-design{
+    width: 100%;
+    padding: 8px 18px;
+    color: white;
+    border:2px solid transparent;
+    background: #494dd0;
+    margin-top: 20px;
+    transition: all .3s ease 0s;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form .button-design:hover{
+    background: #797df3;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form a{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    letter-spacing: 0.9px;
+    color: #9a9a9a;
+    text-decoration: underline;
+    transition: all 0.3s ease 0s;
+}
+.body-login .container .row.align-items-center .col-12 .box-login form a:hover{
+    text-decoration: none;
+}
+/* ======================= REGISTER PAGE ======================= */
+.body-register{    
+    background:#fff url('../img/city.png') no-repeat center;
+    background-size: cover;    
+}
+.body-register .container .row.align-items-center{
+    height: 100vh;
+}
+.body-register .container .row.align-items-center .col-12 .box-register{
+    border: 2px solid #c9c9c9;
+    padding: 15px;
+    width: 100%;
+    max-width: 650px;
+    margin: 20px auto 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 10px 27px 3px rgba(204,204,204,.2);
+}
+.body-register .container .row.align-items-center .col-12 .box-register form .logo-box-register{
+    width:100%;
+    max-width: 100px;
+    margin:15px auto 15px auto;
+    display: table;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form h2{    
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: #9a9a9a;
+    text-align: center;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form .input-design{
+    padding: 8px 18px;
+    border:2px solid transparent;
+    background: #eef5f3; 
+    width: 100%;   
+    margin-bottom: 10px;
+    transition: all 0.3s ease 0s;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form label{
+    font-size: 14px;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form span{
+    color: #494dd0;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form .input-design:focus{
+    background:transparent; 
+    border:2px solid #eef5f3;
+    outline: none;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form .button-design{
+    width: 100%;
+    padding: 8px 18px;
+    color: white;
+    border:2px solid transparent;
+    background: #494dd0;
+    margin-top: 20px;
+    transition: all .3s ease 0s;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form .button-design:hover{
+    background: #797df3;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form p{    
+    margin-top: 10px;
+    color: #9a9a9a;
+    text-align: center;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form p a{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    letter-spacing: 0.9px;
+    color: #494dd0;
+    text-decoration: underline;
+    transition: all 0.3s ease 0s;
+}
+.body-register .container .row.align-items-center .col-12 .box-register form p a:hover{
+    text-decoration: none;
+}

@@ -23,7 +23,6 @@ class PelangganController extends Controller
       'nama' => 'required',
       'email' => 'required|unique:pelanggan',
       'password' => 'required',
-      'repassword' => 'required|same:password',
       'no_telp' => 'required'
     ]);
     $kodePendaftaran = sha1($request->email);
@@ -44,7 +43,7 @@ class PelangganController extends Controller
       $message->subject('Aktivasi Akun');
     });
     DB::table('pelanggan')->insert($insert);
-    return redirect('login');
+    return redirect('login')->with('status', '<script>alert("Registrasi akun berhasil. Silahkan cek kotak inbox email Anda untuk verifikasi akun")</script>');;
   }
 
   public function activateAccount($kodePendaftaran)
@@ -72,18 +71,18 @@ class PelangganController extends Controller
       return redirect('home');
     }
     $this->validate($request, [
-      'email' => 'required',
+      'npwp' => 'required',
       'password' => 'required',
       'g-recaptcha-response' => 'required|captcha'
     ]);
 
     $where = [
-      'email' => $request->email,
+      'npwp' => $request->npwp,
       'password' => sha1($request->password)
     ];
     $result = DB::table('pelanggan')->where($where)->first();
     if ($result == null) {
-      return redirect('login')->with('status', '<script>alert("username / password salah")</script>');
+      return redirect('login')->with('status', '<script>alert("npwp / password salah")</script>');
     }
     if ($result->status == 0) {
       return redirect('login')->with('status', '<script>alert("Maaf, User kamu belum terverifikasi silahkan cek email kamu untuk verifikasi.")</script>');
