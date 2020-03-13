@@ -242,4 +242,84 @@ class QueueController extends Controller
     return response()->json(['status' => 'success', 'message' => $antrianId], 200);
   }
 
+  public function addQueueOnline(Request $request){
+    $pelangganWhere = [
+      'id' => $request->id_pelanggan,
+      'password' => $request->password_pelangggan
+    ];
+    $pelangganData = DB::table('pelanggan')->where($pelangganWhere)->first();
+
+    if ($pelangganData == null) {
+      return response()->json(['status' => 'error', 'message' => 'You are unauthorized to do this action'], 401);
+    }
+    date_default_timezone_set('Asia/Jakarta');
+    $timeNow = date("H:i:s");
+    $dateNow = date("d-m-Y");
+    // if(!$this->checkSyaratAddAntrianOnline()){
+    //   return 
+    // }
+    $urutanLayanan = $request->urutan_layanan;
+    $idLayanan = $request->id_layanan;
+    $ada = false;
+    $dbData = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->orderBy('id', 'desc')->get();
+    if ($dbData == null) {
+      $insert = [
+        'nomor_antrian' => $this->angkaLayananToHurufLayanan($urutanLayanan) . '001',
+        'tanggal_pembuatan' => $dateNow,
+        'jam_pembuatan' => $timeNow,
+        'status' => '1',
+        'kepuasan' => 'TIDAK MENGISI',
+        'id_layanan' => $idLayanan,
+        'id_petugas' => '0',
+        'id_pelanggan' => $request->id_pelanggan
+      ];
+      DB::table('antrian')->insert($insert);
+    } else {
+      for ($i = 0; $i < sizeof($dbData); $i++) {
+        if (substr($dbData[$i]->nomor_antrian, 0, 1) == $this->angkaLayananToHurufLayanan($urutanLayanan)) {
+          $insert = [
+            'nomor_antrian' => ++$dbData[$i]->nomor_antrian,
+            'tanggal_pembuatan' => $dateNow,
+            'jam_pembuatan' => $timeNow,
+            'status' => '1',
+            'kepuasan' => 'TIDAK MENGISI',
+            'id_layanan' => $idLayanan,
+            'id_petugas' => '0',
+            'id_pelanggan' => $request->id_pelanggan
+          ];
+          DB::table('antrian')->insert($insert);
+          $ada = true;
+          break;
+        }
+      }
+      if (!$ada) {
+        $insert = [
+          'nomor_antrian' => $this->angkaLayananToHurufLayanan($urutanLayanan) . '001',
+          'tanggal_pembuatan' => $dateNow,
+          'jam_pembuatan' => $timeNow,
+          'status' => '1',
+          'kepuasan' => 'TIDAK MENGISI',
+          'id_layanan' => $idLayanan,
+          'id_petugas' => '0',
+          'id_pelanggan' => $request->id_pelanggan
+        ];
+        DB::table('antrian')->insert($insert);
+      }
+    }
+    event(new QueueUpdated("New queue. Please update yours"));
+    return response()->json(['status' => 'success', 'message' => 'Queue succesfully added', 'data' => $insert], 201);
+  }
+
+  public function checkSyaratAddAntrianOnline(){
+    date_default_timezone_set('Asia/Jakarta');
+    $day = date("w");
+    $timeNow = date("H:i:s");
+    $dateNow = date("d-m-Y");
+    $queueCount = DB::table('antrian')->where('tanggal_pembuatan', $dateNow)->first();    
+    if($day >= 1 && $day <= 5 && $timeNow > '07:59:59' && $timeNow < '15:00:00' && sizeof($queueCount) < 76){
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

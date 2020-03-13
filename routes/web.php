@@ -13,6 +13,7 @@
 
 Route::get('antriantersayang/antrian', 'HomeController@showHome');
 Route::get('antriantersayang/display', 'HomeController@showDisplay');
+Route::get('tes', 'API\QueueController@checkSyaratAddAntrianOnline');
 
 Route::get('login', 'PelangganController@showLogin');
 Route::post('login', 'PelangganController@login');
