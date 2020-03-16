@@ -6,8 +6,8 @@ const baseUrl =
   hostname == "localhost"
     ? `${protocol}//${hostname}:${port}/`
     : `${protocol}//${hostname}/`;
-$(document).ready(function() {
-  $(".add-queue").on("click", function() {
+$(document).ready(function () {
+  $(".add-queue").on("click", function () {
     let urutan_layanan = $(this).data("urutan_layanan");
     let id_layanan = $(this).data("id_layanan");
     let id_pelanggan = $('#id_pelanggan').val();
@@ -17,7 +17,9 @@ $(document).ready(function() {
       type: "POST",
       data: {
         id: id_pelanggan,
-        password: password_pelanggan
+        password: password_pelanggan,
+        urutan_layanan,
+        id_layanan
       },
       beforeSend: () => {
         Swal.fire({
@@ -28,7 +30,7 @@ $(document).ready(function() {
         });
       },
       success: async (res, status, xhr) => {
-        if (xhr.status == 200) {
+        if (xhr.status == 201) {
           Swal.fire({
             icon: "success",
             title: "Sukses",

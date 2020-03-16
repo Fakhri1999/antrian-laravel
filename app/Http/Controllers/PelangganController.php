@@ -25,7 +25,7 @@ class PelangganController extends Controller
       'password' => 'required',
       'no_telp' => 'required'
     ]);
-    $kodePendaftaran = sha1($request->email);
+    $kodePendaftaran = sha1('pajak' . $request->email);
     $insert = [
       'npwp' => $request->npwp,
       'nama' => $request->nama,
