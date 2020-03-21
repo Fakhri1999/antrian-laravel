@@ -108,6 +108,11 @@ class CustomerController extends Controller
     }
   }
 
+  private function angkaLayananToHurufLayanan($number)
+  {
+    return range('A', 'Z')[$number - 1];
+  }
+
   public function isJumlahAntrianDibawahBatas()
   {
     date_default_timezone_set('Asia/Jakarta');
@@ -119,14 +124,10 @@ class CustomerController extends Controller
       return false;
     }
   }
-  
-  private function angkaLayananToHurufLayanan($number)
-  {
-    return range('A', 'Z')[$number - 1];
-  }
 
   private function isAntrianDidalamJamOperasional()
   {
+    return true;
     date_default_timezone_set('Asia/Jakarta');
     $day = date("w");
     $timeNow = date("H:i:s");

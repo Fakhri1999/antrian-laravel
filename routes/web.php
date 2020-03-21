@@ -24,6 +24,7 @@ Route::post('register', 'PelangganController@register');
 Route::get('aktivasi/{kode_pendaftaran}', 'PelangganController@activateAccount');
 Route::group(['middleware' => ['isLoggedIn']], function () {
   Route::get('home', 'PelangganController@home');
+  Route::get('history', 'PelangganController@history');
   Route::get('logout', 'PelangganController@logout');
 });
 Route::get('reset-antrian', 'API\CustomerController@resetWaktuAntrian');

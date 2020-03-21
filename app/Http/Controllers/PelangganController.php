@@ -93,14 +93,23 @@ class PelangganController extends Controller
 
   public function home()
   {
-    $result = DB::table('layanan')->where('id', '>', '0')->get();
+    $layanan = DB::table('layanan')->where('id', '>', '0')->get();
     $display = DB::table('display')->where('id', 1)->first();
-    return view('pelanggan/index', ['layanan' => $result, 'data' => $display]);
+    return view('pelanggan/index', ['layanan' => $layanan, 'data' => $display]);
   }
 
   public function logout()
   {
     session()->flush();
     return redirect('login');
+  }
+
+  public function history(){
+    $data = DB::table('antrian AS a')
+    ->where('id_pelanggan', session('pelanggan')->id)
+    ->join('layanan AS l', 'a.id_layanan', 'l.id')
+    ->select(DB::raw('a.id, a.nomor_antrian, a.tanggal_pembuatan, a.status, l.nama_layanan'))
+    ->get();
+    return view('pelanggan/history', ['antrian' => $data]);
   }
 }
