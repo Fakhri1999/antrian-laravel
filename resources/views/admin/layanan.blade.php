@@ -20,9 +20,10 @@
           <thead>
             <tr>
               <th style="width: 5%">ID</th>
-              <th style="width: 25%">Nama Layanan</th>
-              <th style="width: 10%">Status</th>
-              <th style="width: 15%">Aksi</th>
+              <th style="width: 20%">Nama Layanan</th>
+              <th style="width: 8%">Status</th>
+              <th style="width: 8%">Estimasi waktu (menit)</th>
+              <th style="width: 7%">Aksi</th>
             </tr>
           </thead>
           <tbody id="isiTableLayanan">
@@ -52,6 +53,10 @@
           <label for="exampleInputEmail1">Nama Layanan</label>
           <input type="text" class="form-control" id="layananNamaAdd" placeholder="Masukkan nama" required>
         </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Estimasi waktu (menit)</label>
+          <input type="text" class="form-control" id="estimasiWaktuLayananAdd" placeholder="Masukkan estimasi waktu" required>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -76,6 +81,10 @@
           <input type="hidden" id="layananIdEdit">
           <label for="exampleInputEmail1">Nama Layanan</label>
           <input type="text" class="form-control" id="layananNamaEdit" placeholder="Masukkan nama" required>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Estimasi waktu (menit)</label>
+          <input type="text" class="form-control" id="estimasiWaktuLayananEdit" placeholder="Masukkan estimasi waktu" required>
         </div>
       </div>
       <div class="modal-footer">

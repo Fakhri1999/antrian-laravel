@@ -36,7 +36,7 @@ class PelangganController extends Controller
       'kode_pendaftaran' => $kodePendaftaran
     ];
     Mail::send('email.aktivasi_akun', ['kode_pendaftaran' => $kodePendaftaran], function ($message) use ($request) {
-      $message->from('john@johndoe.com', 'John Doe');
+      $message->from('no-reply@maksel805.org', 'Antrian Pajak Online');
       $message->to($request->email, $request->nama);
       $message->cc($request->email, $request->nama);
       $message->bcc($request->email, $request->nama);
@@ -95,7 +95,47 @@ class PelangganController extends Controller
   {
     $layanan = DB::table('layanan')->where('id', '>', '0')->get();
     $display = DB::table('display')->where('id', 1)->first();
-    return view('pelanggan/index', ['layanan' => $layanan, 'data' => $display]);
+    date_default_timezone_set('Asia/Jakarta');
+    $dateNow = date("d-m-Y");
+    // $dateNow = '11-02-2020';
+    $layanan = DB::table('layanan')->where('id', '>', '0')->get();
+    $arr = [];
+    $jumlahTiapLayanan = DB::table('antrian')
+      ->where('tanggal_pembuatan', $dateNow)
+      ->where('status', '1')
+      ->select(DB::raw('id_layanan, count(*) as jumlah'))
+      ->groupBy('id_layanan')->get();
+    for ($i = 0; $i < sizeof($layanan); $i++) {
+      $cek = false;
+      for ($j = 0; $j < sizeof($jumlahTiapLayanan); $j++) {
+        if ($jumlahTiapLayanan[$j]->id_layanan == $layanan[$i]->id) {
+          $arrTemp = [
+            'nama_layanan' => $layanan[$i]->nama_layanan,
+            'status' => $layanan[$i]->status,
+            'id' => $layanan[$i]->id,
+            'urutan' => $layanan[$i]->urutan,
+            'jumlah' => $jumlahTiapLayanan[$j]->jumlah,
+            'total_estimasi' => $jumlahTiapLayanan[$j]->jumlah * $layanan[$i]->estimasi_waktu
+          ];
+          array_push($arr, $arrTemp);
+          $cek = true;
+          break;
+        }
+      }
+      if (!$cek) {
+        $arrTemp = [
+          'nama_layanan' => $layanan[$i]->nama_layanan,
+          'status' => $layanan[$i]->status,
+          'id' => $layanan[$i]->id,
+          'urutan' => $layanan[$i]->urutan,
+          'jumlah' => '0',
+          'total_estimasi' => '0'
+        ];
+        array_push($arr, $arrTemp);
+      }
+    }
+    $display = DB::table('display')->where('id', 1)->first();
+    return view('pelanggan/index', ['layanan' => $arr, 'data' => $display]);
   }
 
   public function logout()
@@ -104,12 +144,13 @@ class PelangganController extends Controller
     return redirect('login');
   }
 
-  public function history(){
+  public function history()
+  {
     $data = DB::table('antrian AS a')
-    ->where('id_pelanggan', session('pelanggan')->id)
-    ->join('layanan AS l', 'a.id_layanan', 'l.id')
-    ->select(DB::raw('a.id, a.nomor_antrian, a.tanggal_pembuatan, a.status, l.nama_layanan'))
-    ->get();
+      ->where('id_pelanggan', session('pelanggan')->id)
+      ->join('layanan AS l', 'a.id_layanan', 'l.id')
+      ->select(DB::raw('a.id, a.nomor_antrian, a.tanggal_pembuatan, a.status, l.nama_layanan'))
+      ->get();
     return view('pelanggan/history', ['antrian' => $data]);
   }
 }

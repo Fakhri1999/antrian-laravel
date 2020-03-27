@@ -21,21 +21,21 @@
         <h3>{{$data->nama_perusahaan}}</h3>
         <h4>{{$data->alamat_perusahaan}}</h4>
       </div>
-      @for ($i = 0; $i < sizeof($layanan); $i++) <div class="col-12 col-md-6 col-lg-4">
-        @if ($layanan[$i]->status == 1)
-        <button class="button-antrian add-queue" data-urutan_layanan="{{$layanan[$i]->urutan}}"
-            data-id_layanan="{{$layanan[$i]->id}}">
+      @for ($i = 0; $i < sizeof($layanan); $i++) @if ($layanan[$i]['status'] == 1)
+        <div class="col-12 col-md-6 col-lg-4">
+          <button class="button-antrian add-queue" data-urutan_layanan="{{$layanan[$i]['urutan']}}"
+            data-id_layanan="{{$layanan[$i]['id']}}">
             <p class="mb-0">
               Antrian
             </p>
             <h5>
-              {{$layanan[$i]->nama_layanan}}
-          </h5>
-        </button>
+              {{$layanan[$i]['nama_layanan']}}
+            </h5>
+          </button>
+        </div>
         @endif
+        @endfor
     </div>
-    @endfor
-  </div>
   </div>
   <div class="d-none">
     <div class="print">

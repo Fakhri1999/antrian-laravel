@@ -97,7 +97,7 @@ class CustomerController extends Controller
     ];
     $update = [
       'status' => '10',
-      'antrian_updated_at' => $timeNow
+      'antrian_updated_at' => "$dateNow $timeNow"
     ];
     $result = DB::table('pelanggan')->where($where)->update($update);
     if ($result) {
@@ -127,7 +127,6 @@ class CustomerController extends Controller
 
   private function isAntrianDidalamJamOperasional()
   {
-    return true;
     date_default_timezone_set('Asia/Jakarta');
     $day = date("w");
     $timeNow = date("H:i:s");

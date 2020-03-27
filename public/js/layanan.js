@@ -12,12 +12,14 @@ $(document).ready(function() {
   refreshLayanan();
   $("#submitTambahLayanan").on("click", function() {
     let nama = $("#layananNamaAdd").val();
+    let estimasi = $("#estimasiWaktuLayananAdd").val();
     console.log(nama);
     $.ajax({
       url: `${baseUrl}api/v1/service`,
       type: "POST",
       data: {
         nama,
+        estimasi,
         auth: API_KEY
       },
       beforeSend: () => {
@@ -55,10 +57,12 @@ $(document).ready(function() {
     let nomer = $(this).data("nomer");
     $("#layananIdEdit").val(dataLayanan[nomer].id);
     $("#layananNamaEdit").val(dataLayanan[nomer].nama_layanan);
+    $("#estimasiWaktuLayananEdit").val(dataLayanan[nomer].estimasi_waktu);
     $("#editServiceModal").modal("show");
   });
   $("#submitEditLayanan").on("click", function() {
     let nama = $("#layananNamaEdit").val();
+    let estimasi = $("#estimasiWaktuLayananEdit").val();
     let id = $("#layananIdEdit").val();
     $.ajax({
       url: `${baseUrl}api/v1/service`,
@@ -66,6 +70,7 @@ $(document).ready(function() {
       data: {
         id,
         nama,
+        estimasi,
         auth: API_KEY
       },
       beforeSend: () => {
@@ -201,6 +206,7 @@ function refreshLayanan() {
         res.message.forEach(e => {
           render += `<tr><td>${count}</td><td>${e.nama_layanan}</td>`;
           render += e.status == 0 ? `<td>Nonaktif</td>` : `<td>Aktif</td>`;
+          render += `<td>${e.estimasi_waktu}</td>`
           render += `<td>`;
           render +=
             e.status == 0

@@ -27,6 +27,7 @@ class ServiceController extends Controller
     $services = DB::table('layanan')->get();
     $insert = [
       'nama_layanan' => $request->nama,
+      'estimasi_waktu' => $request->estimasi,
       'urutan' => ++$services[sizeof($services) - 1]->urutan
     ];
     $result = DB::table('layanan')->insert($insert);
@@ -44,7 +45,8 @@ class ServiceController extends Controller
     }
     $id = $request->id;
     $update = [
-      'nama_layanan' => $request->nama
+      'nama_layanan' => $request->nama,
+      'estimasi_waktu' => $request->estimasi,
     ];
     $isNameUnique = DB::table('layanan')->where('id', '!=', $id)->where('nama_layanan', $update['nama_layanan'])->first() == null;
     if (!$isNameUnique) {
