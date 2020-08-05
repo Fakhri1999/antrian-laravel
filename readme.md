@@ -4,3 +4,8 @@
 2. Then run `npm install`
 3. Change the .env file
 4. Type `php artisan serve` then the app will run on port 8000
+
+Dikerjakan oleh M. Firhan Azmi Nor & Fakhri Immadudin 
+
+Client : 
+http://maksel805.org/
